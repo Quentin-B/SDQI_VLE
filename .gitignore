@@ -2,6 +2,7 @@ Makefile
 config.h
 vle*.pc
 eov*.pc
+build/
 src/apps/vle/vle
 src/apps/eov/eov
 src/apps/oov/oov

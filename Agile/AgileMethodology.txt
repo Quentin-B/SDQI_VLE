@@ -1,0 +1,58 @@
+Online Story
+---------------------------------------------------------
+
+
+http://linoit.com/users/rpadilla/canvases/VLE-SDQI
+
+
+Roles
+---------------------------------------------------------
+
+
+Integrator  -
+  * Pornpen 
+
+Team Leader -
+  * Rey
+
+
+Developer
+   * Everyone
+
+Github Master
+   * Quentin
+
+
+Modified XP Rules
+---------------------------------------------------------
+
+Planning
+- User Stories 
+- Release Planning -Tuesday -> Workshop, Wednesday   (Put in github)
+- iterative The project is divided into iterations - once a week
+
+Managing
+ Give the team a dedicated open work space --> At least a Pair should work in some dedicated workspace.
+  Set a sustainable pace. 
+ A stand up meeting starts each day. - only twice a week - Tuesday and wedneday
+ Move people around -> Changing Pair 
+ 
+
+Designing 
+ Simplicity 
+ Refactor whenever and wherever possible
+ The Design will be done by Pair if not global 
+
+Coding 
+  *The customer is always available - show the customer some .
+  *Code must be written to agreed standards - in VLE website
+  *Code the unit test first - if it is relevant only
+  *All production code is pair programmed  
+  *Integrate often
+  * We have an one integrator only.
+
+
+Testing
+  * All code must have unit tests - if it is possible
+  * All code must pass all unit tests before it  can be released.
+  * When a bug is found tests are created.
