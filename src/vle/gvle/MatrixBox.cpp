@@ -24,6 +24,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include <vle/gvle/BooleanBox.hpp>
 #include <vle/gvle/MatrixBox.hpp>
 #include <vle/gvle/NewTypeBox.hpp>
@@ -102,26 +103,26 @@ void MatrixBox::makeTable()
 {
     const value::MatrixValue& matrix = mValue->matrix();
     mArray = new array_type(boost::extents[mValue->columns()][mValue->rows(
-                                    )]);
+                                                                  )]);
     for (unsigned int i = 0; i != mValue->rows(); ++i) {
         for (unsigned int j = 0; j != mValue->columns(); ++j) {
+            //Button
             (*mArray)[j][i].first = new Gtk::Button();
             if (matrix[j][i] != 0) {
-                (*mArray)[j][i].first->set_label(
-                    boost::trim_copy(matrix[j][i]->writeToString()));
+                (*mArray)[j][i].first->set_label(gvle::valuetype_to_string(
+                        matrix[j][i]->getType()));
             } else {
                 (*mArray)[j][i].first->set_label(_("(no value)"));
             }
 
             mTable->attach(*(*mArray)[j][i].first,
-                           j,
-                           j + 1,
-                           i,
-                           i + 1,
-                           Gtk::FILL,
-                           Gtk::FILL);
-            (*mArray)[j][i].first->signal_clicked().connect(
-                sigc::bind(
+                j,
+                j + 1,
+                i,
+                i + 1,
+                Gtk::FILL,
+                Gtk::FILL);
+            (*mArray)[j][i].first->signal_clicked().connect(sigc::bind(
                     sigc::mem_fun(*this, &MatrixBox::on_click), i, j));
 
             if (matrix[j][i] != 0) {
@@ -130,8 +131,7 @@ void MatrixBox::makeTable()
                 (*mArray)[j][i].first->set_has_tooltip();
 #endif
                 (*mArray)[j][i].second->set_tip(*(*mArray)[j][i].first,
-                                                gvle::valuetype_to_string(
-                                                    matrix[j][i]->getType()));
+                    boost::trim_copy(matrix[j][i]->writeToString()));
             }
         }
     }
@@ -140,27 +140,22 @@ void MatrixBox::makeTable()
 void MatrixBox::on_click(unsigned int i, unsigned int j)
 {
     value::MatrixView view = mValue->value();
-    value::Value* v= view[j][i];
+    value::Value* v = view[j][i];
 
     if (v == 0) {
-        NewTypeBox box;
-        v = box.launch();
+        NewTypeBox box(v);
+        box.run();
         if (v != 0) {
-            view[j][i] = v;
-
-            (*mArray)[j][i].first->set_label(
-                boost::trim_copy(view[j][i]->writeToString()));
+            (*mArray)[j][i].first->set_label(gvle::valuetype_to_string(
+                    view[j][i]->getType()));
             (*mArray)[j][i].second = new Gtk::Tooltips();
 #if GTKMM_MAJOR_VERSION == 2 && GTKMM_MINOR_VERSION > 10
             (*mArray)[j][i].first->set_has_tooltip();
 #endif
-            (*mArray)[j][i].second->set_tip(
-                *(*mArray)[j][i].first,
-                gvle::valuetype_to_string(view[j][i]->getType()));
+            (*mArray)[j][i].second->set_tip(*(*mArray)[j][i].first,
+                boost::trim_copy(view[j][i]->writeToString()));
         }
-    }
-
-    if (v != 0) {
+    } else {
         switch (v->getType()) {
         case (value::Value::BOOLEAN):
         {
@@ -207,7 +202,7 @@ void MatrixBox::on_click(unsigned int i, unsigned int j)
         }
         break;
         case (value::Value::XMLTYPE):
-            {
+        {
             value::Xml* xml = dynamic_cast < value::Xml* > (v);
             XmlTypeBox box(xml);
             box.run();
@@ -216,7 +211,8 @@ void MatrixBox::on_click(unsigned int i, unsigned int j)
         default:
             break;
         }
-        (*mArray)[j][i].first->set_label(boost::trim_copy(v->writeToString()));
+        (*mArray)[j][i].second->set_tip(*(*mArray)[j][i].first,
+            boost::trim_copy(view[j][i]->writeToString()));
     }
 }
 }
