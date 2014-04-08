@@ -258,11 +258,6 @@ void ViewDrawingArea::drawLines()
 {
     std::vector < StraightLine >::const_iterator itl = mLines.begin();
     int i =0;
-    int n = 0;
-    int source_1 = 0;
-    int source_2 = 0;
-    int destination_1 = 0;
-    int destination_2 = 0;
 
     while (itl != mLines.end()) {
         if (i != mHighlightLine) {
@@ -274,32 +269,11 @@ void ViewDrawingArea::drawLines()
         std::vector <Point>::const_iterator iter = itl->begin();
         while (iter != itl->end()) {
             mContext->line_to(iter->first + mOffset, iter->second + mOffset);
-
-			if (n == 3) {
-				source_1 = iter->first + mOffset;
-				source_2 = iter->second + mOffset;
-			}
-			else if (n == 4) {
-				destination_1 = iter->first + mOffset;
-				destination_2 = iter->second + mOffset;
-			}
-            ++n;
             ++iter;
         }
-        int x = 0, y = 0;
-        x = (source_1 + destination_1) / 2;
-        y = (source_2 + destination_2) / 2;
-
-        Cairo::TextExtents connection_label;
-        mContext->get_text_extents("Your text", connection_label);
-        mContext->move_to(x - (connection_label.width / 2),
-                          y - 5);
-        mContext->show_text("Your text");
-
         mContext->stroke();
         ++i;
         ++itl;
-        n = 0;
     }
 }
 
@@ -384,6 +358,7 @@ void ViewDrawingArea::drawChildrenModels()
 
         if (mView->existInSelectedModels(model)) {
             drawChildrenModel(model, Settings::settings().getSelectedColor());
+
         } else {
             if (model->isAtomic()) {
                 drawChildrenModel(model, Settings::settings().getAtomicColor());
@@ -455,6 +430,7 @@ void ViewDrawingArea::highlightLine(int mx, int my)
     std::vector < StraightLine >::const_iterator itl = mLines.begin();
     bool found = false;
     int i = 0;
+    
 
     while (itl != mLines.end() and not found) {
         int xs2, ys2;

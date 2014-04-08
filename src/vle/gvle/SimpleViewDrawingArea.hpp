@@ -178,6 +178,8 @@ namespace vle { namespace gvle {
 	 */
         void drawChildrenModel(vpz::BaseModel* model,const Gdk::Color& color);
 
+	void label ();
+
 	bool on_button_press_event(GdkEventButton* event);
 	bool on_button_release_event(GdkEventButton* event);
 
