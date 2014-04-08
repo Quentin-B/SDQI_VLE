@@ -46,8 +46,10 @@ namespace vle { namespace vpz {
          */
         enum type { VLE_VPZ_STRUCTURES, VLE_VPZ_MODEL, VLE_VPZ_SUBMODELS,
             VLE_VPZ_CONNECTIONS, VLE_VPZ_INTERNAL_CONNECTION,
-            VLE_VPZ_INPUT_CONNECTION, VLE_VPZ_OUTPUT_CONNECTION, VLE_VPZ_ORIGIN,
-            VLE_VPZ_DESTINATION, VLE_VPZ_IN, VLE_VPZ_OUT, VLE_VPZ_INIT,
+            VLE_VPZ_INPUT_CONNECTION, VLE_VPZ_OUTPUT_CONNECTION,
+            VLE_VPZ_DESCRIPTIONS, VLE_VPZ_DESCRIPTION,
+            VLE_VPZ_ORIGIN,VLE_VPZ_DESTINATION,
+            VLE_VPZ_IN, VLE_VPZ_OUT, VLE_VPZ_INIT,
             VLE_VPZ_STATE, VLE_VPZ_PORT, VLE_VPZ_DYNAMICS, VLE_VPZ_DYNAMIC,
             VLE_VPZ_EXPERIMENT, VLE_VPZ_PROJECT, VLE_VPZ_VIEWS,
             VLE_VPZ_OBSERVABLES, VLE_VPZ_OBSERVABLE, VLE_VPZ_OBSERVABLEPORT,
@@ -144,6 +146,19 @@ namespace vle { namespace vpz {
          */
         inline bool isDestination() const
         { return getType() == VLE_VPZ_DESTINATION; }
+
+
+        /**
+		 * @return True if type is DESCRIPTIONS.
+		 */
+		inline bool isDescriptions() const
+		{ return getType() == VLE_VPZ_DESCRIPTIONS; }
+
+		/**
+		 * @return True if type is DESCRIPTION.
+		 */
+		inline bool isDescription() const
+		{ return getType() == VLE_VPZ_DESCRIPTION; }
 
         /**
          * @return True if type is IN.

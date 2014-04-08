@@ -225,6 +225,8 @@ namespace vle { namespace vpz {
         void onSubModels(const xmlChar** att);
         void onConnections(const xmlChar** att);
         void onConnection(const xmlChar** att);
+        void onDescriptions(const xmlChar** att);
+        void onDescription(const xmlChar** att);
         void onOrigin(const xmlChar** att);
         void onDestination(const xmlChar** att);
         void onDynamics(const xmlChar** att);
@@ -264,6 +266,8 @@ namespace vle { namespace vpz {
         void onEndSubModels();
         void onEndConnections();
         void onEndConnection();
+        void onEndDescriptions();
+        void onEndDescription();
         void onEndOrigin();
         void onEndDestination();
         void onEndDynamics();
@@ -316,6 +320,10 @@ namespace vle { namespace vpz {
                 &SaxParser::onEndConnections);
             add("connection", &SaxParser::onConnection,
                 &SaxParser::onEndConnection);
+            add("descriptions", &SaxParser::onDescriptions,
+				&SaxParser::onEndDescriptions);
+			add("description", &SaxParser::onDescription,
+				&SaxParser::onEndDescription);
             add("origin", &SaxParser::onOrigin, &SaxParser::onEndOrigin);
             add("destination", &SaxParser::onDestination,
                 &SaxParser::onEndDestination);

@@ -33,6 +33,7 @@
 #include <cassert>
 #include <algorithm>
 #include <stack>
+#include <map>
 
 namespace vle { namespace vpz {
 
@@ -897,6 +898,27 @@ void CoupledModel::writeConnections(std::ostream& out) const
             }
         }
     }
+    writeDescriptions(out);
+
+}
+
+void CoupledModel::writeDescriptions(std::ostream& out) const
+{
+	if(not m_descriptionList.empty())
+	{
+		out << "<descriptions>\n";
+		for (DescriptionList::const_iterator it = m_descriptionList.begin();
+			 it != m_descriptionList.end(); ++it) {
+			const std::string& src_dst(it->first);
+			const std::string& src = src_dst.substr(0,src_dst.find('-'));
+			//const std::string& dst = src_dst.substr(src_dst.find('-')+1,src_dst.size()-src.size()+1);
+			const std::string& dst = src_dst.substr(src_dst.find('-')+1);
+			const std::string& text = it->second;
+
+				out << "<description origin=\""+ src + "\" destination=\""+ dst + "\" text=\""+ text + "\"/>\n";
+		}
+		out << "</descriptions>\n";
+	}
 
 }
 void CoupledModel::write(std::ostream& out) const
@@ -1070,6 +1092,27 @@ const ModelPortList& CoupledModel::getInternalOutPort(
     }
 
     return it->second;
+}
+void CoupledModel::addConnectionDescription(const std::string& src,
+                                 	  const std::string& dst,
+                                 	  const std::string& text)
+{
+	if (not exist(src)) {
+	        throw utils::DevsGraphError(
+	            _("Cannot add description with unknown origin"));
+	    }
+
+	if (not exist(dst)) {
+		throw utils::DevsGraphError(
+			_("Cannot add description with unknown destination"));
+	}
+
+	m_descriptionList[src+"-"+dst] = text;
+}
+std::string CoupledModel::getConnectionDescrition(const std::string& src,
+                                 const std::string& dst)
+{
+	return m_descriptionList.find(src+"-"+dst)->second;
 }
 
 void CoupledModel::copyInternalConnection(const ConnectionList& src,

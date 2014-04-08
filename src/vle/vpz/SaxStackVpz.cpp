@@ -451,6 +451,82 @@ void SaxStackVpz::buildConnection()
     delete cnt;
 }
 
+void SaxStackVpz::pushDescriptions()
+{
+    if (m_stack.empty() or not parent()->isConnections()) {
+        throw utils::SaxParserError();
+    }
+
+    vpz::Descriptions* descs = new vpz::Descriptions();
+    push(descs);
+}
+
+void SaxStackVpz::pushDescription(const xmlChar** att)
+{
+    if (m_stack.empty() or not parent()->isDescriptions()) {
+        throw utils::SaxParserError();
+    }
+
+    const xmlChar* origin = 0;
+    const xmlChar* destination = 0;
+    const xmlChar* text = 0;
+
+    for (int i = 0; att[i] != 0; i += 2) {
+        if (xmlStrcmp(att[i], (const xmlChar*)"origin") == 0) {
+        	origin = att[i + 1];
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"destination") == 0) {
+        	destination = att[i + 1];
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"text") == 0) {
+        	text = att[i + 1];
+        }
+    }
+
+    if (not origin or not destination) {
+        throw utils::SaxParserError(
+            _("Description tag does not have an attribute 'origin' or 'destination'"));
+    }
+
+    vpz::Base* desc = new vpz::Description((const char*)origin, (const char*)destination,
+    										text ? xmlCharToString(text) : "");
+	push(desc);
+}
+
+void SaxStackVpz::buildDescription()
+{
+	//pop Desc
+	if (not parent()->isDescription()) {
+				throw utils::SaxParserError();
+		}
+	vpz::Description* description = static_cast < vpz::Description* >(pop());
+	//pop descs
+	if (not parent()->isDescriptions()) {
+			throw utils::SaxParserError();
+	}
+	vpz::Base* descx = pop();
+	//pop connections
+	if (not parent()->isConnections()) {
+	        throw utils::SaxParserError();
+	}
+	vpz::Base* cntx = pop();
+
+	if (not parent()->isModel()) {
+		throw utils::SaxParserError();
+	}
+	vpz::Model* model = static_cast < vpz::Model* >(parent());
+
+	vpz::CoupledModel* cpl = static_cast < vpz::CoupledModel*
+		>(model->model());
+	//create desc
+	//To do....
+	cpl->addConnectionDescription(description->origin,description->destination,description->text);
+
+
+	//push back descriptions
+	push(descx);
+	//push back connections
+	push(cntx);
+}
+
 void SaxStackVpz::pushDynamics()
 {
     if (m_stack.empty() or not parent()->isVpz()) {

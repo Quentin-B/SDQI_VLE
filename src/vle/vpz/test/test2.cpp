@@ -132,6 +132,9 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
         "     <origin model=\"atom2\" port=\"out\" />\n"
         "     <destination model=\"test2\" port=\"o\" />\n"
         "    </connection>\n"
+		"   <descriptions>\n"
+		"   	<description origin=\"atom1\" destination=\"atom2\" text=\"Hello World\" />\n"
+		"   </descriptions>\n"
         "   </connections>\n"
         "  </model>\n"
         " </structures>\n"
@@ -139,7 +142,6 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
 
     vpz::Vpz vpz;
     vpz.parseMemory(xml);
-
     const vpz::Model& mdl(vpz.project().model());
     BOOST_REQUIRE(mdl.model() != 0);
     BOOST_REQUIRE_EQUAL(mdl.model()->isCoupled(), true);
@@ -167,6 +169,7 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
     BOOST_REQUIRE(cpl->existInputConnection("i", "atom1", "in"));
     BOOST_REQUIRE(cpl->existOutputConnection("atom2", "out", "o"));
     BOOST_REQUIRE(cpl->existInternalConnection("atom1", "out", "atom2", "in"));
+    std::cout << "description test: " << cpl->getConnectionDescrition("atom1","atom2");
 }
 
 BOOST_AUTO_TEST_CASE(dynamic_vpz)

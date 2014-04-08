@@ -420,6 +420,72 @@ namespace vle { namespace vpz {
         std::string port; //!< the name of the Out port.
     };
 
+    class VLE_API Descriptions : public Base
+        {
+        public:
+            /**
+             * @brief Build a Descriptions.
+             */
+    	Descriptions()
+            {}
+
+            /**
+             * @brief Nothing to delete.
+             */
+            virtual ~Descriptions()
+            {}
+
+            /**
+             * @brief Nothing to output.
+             */
+            virtual void write(std::ostream& /* out */) const
+            {}
+
+            /**
+             * @brief Get the type of this class.
+             * @return Descriptions.
+             */
+            virtual Base::type getType() const
+            { return VLE_VPZ_DESCRIPTIONS; }
+        };
+
+    class VLE_API Description: public Base
+	{
+	public:
+    	/**
+		 * @brief Build a Description.
+		 */
+    	Description(const std::string& origin,
+					const std::string& destination,
+					const std::string& text) :
+    	            origin(origin),
+    	            destination(destination),
+    	            text(text)
+    	        {}
+		/**
+		 * @brief Nothing to delete.
+		 */
+		virtual ~Description()
+		{}
+
+		/**
+		 * @brief Nothing to output.
+		 */
+		virtual void write(std::ostream& /* out */) const
+		{}
+
+		/**
+		 * @brief Get the type of this class.
+		 * @return Description.
+		 */
+		virtual Base::type getType() const
+		{ return VLE_VPZ_DESCRIPTION; }
+
+		std::string origin;
+		std::string destination;
+		std::string text; //!< the description of the Out port.
+	};
+
 }} // namespace vle vpz
 
 #endif

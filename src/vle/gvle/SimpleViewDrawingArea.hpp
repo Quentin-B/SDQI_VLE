@@ -51,6 +51,7 @@ namespace vle { namespace gvle {
         {
             vpz::BaseModel* source;
             vpz::BaseModel* destination;
+            std::string description;
         } Connexion;
 	static const gint MODEL_RADIUS;
         SimpleViewDrawingArea(View* view);

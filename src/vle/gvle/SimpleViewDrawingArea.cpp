@@ -432,6 +432,7 @@ void SimpleViewDrawingArea::preComputeConnectInfo()
       for (jt = ports.begin(); jt != ports.end(); ++jt) {
         record.source = mCurrent;
         record.destination = jt->first;
+        record.description = mCurrent->getConnectionDescrition(record.source->getName(),record.destination->getName());
         mConnectionInfo.push_back(record);
       }
     }

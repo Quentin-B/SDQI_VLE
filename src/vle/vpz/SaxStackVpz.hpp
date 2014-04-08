@@ -151,6 +151,21 @@ namespace vle {
         void pushDestination(const xmlChar** att);
 
         /**
+		 * @brief Push a Descriptions into the stack.
+		 * @throw utils::SaxParserError if stack is empty or parent is not a
+		 * Connections.
+		 */
+        void pushDescriptions();
+
+        /**
+		 * @brief Push a Description into the stack.
+		 * @param att The attribute list.
+		 * @throw utils::SaxParserError if stack is empty or parent is not
+		 * Descriptions.
+		 */
+		void pushDescription(const xmlChar** att);
+
+        /**
          * @brief Push a Dynamics into the stack.
          * @throw utils::SaxParserError if stack is empty or parent is not Vpz.
          */
@@ -319,6 +334,8 @@ namespace vle {
          * (Destination, Origin, Connection) is bad.
          */
         void buildConnection();
+
+        void buildDescription();
 
         /**
          * @brief Get the top of the stack.
