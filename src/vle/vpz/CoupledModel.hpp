@@ -45,6 +45,12 @@ namespace vle { namespace vpz {
         typedef std::vector < std::string > StringList;
         typedef std::map <std::string, ConnectionList> ModelConnections;
         typedef std::map <std::string, std::string> DescriptionList;
+       	struct ConnectionDescription
+        {
+            BaseModel* model_1;
+            BaseModel* model_2;
+            std::string text;
+        };
         /**
          * @brief Constructor to intialize parent, position (0,0), size (0,0)
          * and name.
@@ -265,9 +271,11 @@ namespace vle { namespace vpz {
                                  	  const std::string& dst,
                                  	  const std::string& desc);
         //Code by jew
-        std::string getConnectionDescrition(const std::string& src,
+        std::string getConnectionDescription(const std::string& src,
                                  const std::string& dst);
 
+        DescriptionList getAllConnectionDescriptions();
+        	
         /**
          * @brief Delete all connection around model m.
          *
@@ -808,6 +816,7 @@ namespace vle { namespace vpz {
         ConnectionList  m_internalInputList;
         ConnectionList  m_internalOutputList;
         DescriptionList m_descriptionList;
+        std::vector<ConnectionDescription> m_connectionDescriptionList;
 
         /* Connections */
         std::vector < BaseModel* > m_srcConnections;

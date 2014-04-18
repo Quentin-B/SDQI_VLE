@@ -910,12 +910,11 @@ void CoupledModel::writeDescriptions(std::ostream& out) const
 		for (DescriptionList::const_iterator it = m_descriptionList.begin();
 			 it != m_descriptionList.end(); ++it) {
 			const std::string& src_dst(it->first);
-			const std::string& src = src_dst.substr(0,src_dst.find('-'));
-			//const std::string& dst = src_dst.substr(src_dst.find('-')+1,src_dst.size()-src.size()+1);
-			const std::string& dst = src_dst.substr(src_dst.find('-')+1);
+			const std::string& src = src_dst.substr(0, src_dst.find('-'));
+			const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
 			const std::string& text = it->second;
 
-				out << "<description origin=\""+ src + "\" destination=\""+ dst + "\" text=\""+ text + "\"/>\n";
+		    out << "<description origin=\""+ src + "\" destination=\""+ dst + "\" text=\""+ text + "\"/>\n";
 		}
 		out << "</descriptions>\n";
 	}
@@ -1109,10 +1108,15 @@ void CoupledModel::addConnectionDescription(const std::string& src,
 
 	m_descriptionList[src+"-"+dst] = text;
 }
-std::string CoupledModel::getConnectionDescrition(const std::string& src,
+std::string CoupledModel::getConnectionDescription(const std::string& src,
                                  const std::string& dst)
 {
 	return m_descriptionList.find(src+"-"+dst)->second;
+}
+
+CoupledModel::DescriptionList CoupledModel::getAllConnectionDescriptions()
+{
+    return m_descriptionList;
 }
 
 void CoupledModel::copyInternalConnection(const ConnectionList& src,

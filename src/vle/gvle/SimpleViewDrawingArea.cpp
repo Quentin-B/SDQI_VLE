@@ -172,7 +172,23 @@ void SimpleViewDrawingArea::label()
     mContext->set_font_size(10);
     mContext->set_source_rgb (255, 0, 255);
 
-    mContext->show_text("Link");
+    // Test showing the connection description label
+    std::string test;
+    vpz::CoupledModel::DescriptionList allConnections = mCurrent->getAllConnectionDescriptions();
+    if(not allConnections.empty())
+    {
+        for (vpz::CoupledModel::DescriptionList::const_iterator it = allConnections.begin();
+             it != allConnections.end(); ++it) {
+            const std::string& src_dst(it->first);
+            const std::string& src = src_dst.substr(0, src_dst.find('-'));
+            const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
+            const std::string& text = it->second;
+
+            test += text;
+        }
+    }
+    // mContext->show_text("Link");
+    mContext->show_text(test);
 
     mContext->stroke();
 
@@ -432,7 +448,7 @@ void SimpleViewDrawingArea::preComputeConnectInfo()
       for (jt = ports.begin(); jt != ports.end(); ++jt) {
         record.source = mCurrent;
         record.destination = jt->first;
-        record.description = mCurrent->getConnectionDescrition(record.source->getName(),record.destination->getName());
+        record.description = mCurrent->getConnectionDescription(record.source->getName(),record.destination->getName());
         mConnectionInfo.push_back(record);
       }
     }

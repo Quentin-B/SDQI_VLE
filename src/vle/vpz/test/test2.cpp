@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
     BOOST_REQUIRE(cpl->existInputConnection("i", "atom1", "in"));
     BOOST_REQUIRE(cpl->existOutputConnection("atom2", "out", "o"));
     BOOST_REQUIRE(cpl->existInternalConnection("atom1", "out", "atom2", "in"));
-    std::cout << "description test: " << cpl->getConnectionDescrition("atom1","atom2");
+    std::cout << "description test: " << cpl->getConnectionDescription("atom1","atom2");
 }
 
 BOOST_AUTO_TEST_CASE(dynamic_vpz)
