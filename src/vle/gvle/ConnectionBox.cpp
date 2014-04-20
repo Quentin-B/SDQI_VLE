@@ -47,20 +47,24 @@ ConnectionBox::ConnectionBox(vpz::CoupledModel* parent,
         m_left2(false),
         m_right(_("Destination model")),
         m_right2(false)
+
+
+  //      m_description(_("Description"))
+
 {
     assert(parent and src and dst);
 
-    m_label.set_markup(_("<big><b>Connection</b></big>"));
+    m_label.set_markup(_("<b>Connection</b>"));
     m_labelInput.set_markup(src->getName());
     m_labelOutput.set_markup(dst->getName());
-
+    
     assingComboInputPort(parent, src);
     assingComboOutputPort(parent, dst);
 
     m_left.set_border_width(5);
     m_right.set_border_width(5);
 
-    m_vbox.add(m_label);
+   // m_vbox.add(m_label);
     m_vbox.add(m_hbox);
     m_hbox.add(m_left);
     m_hbox.add(m_right);
@@ -70,6 +74,31 @@ ConnectionBox::ConnectionBox(vpz::CoupledModel* parent,
     m_left2.pack_start(m_comboInput, false, true, 0);
     m_right2.pack_start(m_labelOutput, true, true, 0);
     m_right2.pack_start(m_comboOutput, false, true, 0);
+
+
+  // m_labelDescription.set_markup(_("<big><b>Label</b></big>"));
+//    m_vbox.add(m_labelDescription);    
+
+//    m_description.set_markup(_("Description:"));
+//    m_vbox.add(m_description);    
+        
+
+  /*  m_entry = Gtk::manage(new Gtk::Entry());
+    m_entry->set_text(parent -> vpz::CoupledModel::getConnectionDescription("a","b"));
+
+    Gtk::Frame * frameNorth = Gtk::manage(new Gtk::Frame(_("Connection's Description: ")));
+    frameNorth->set_border_width(5);
+    frameNorth->set_shadow_type(Gtk::SHADOW_NONE);
+    frameNorth->add(*m_entry);
+
+    Gtk::VBox *vbox1 = Gtk::manage(new class Gtk::VBox(false, 0));
+    vbox1->pack_start(*frameNorth, Gtk::PACK_SHRINK, 0);
+    vbox1->pack_start(m_description,true,true,0);
+
+    get_vbox()->add(*vbox1);
+    get_vbox()->set_homogeneous(false);
+    get_vbox()->set_spacing(0);*/
+
 
     add_button(Gtk::Stock::NO, Gtk::RESPONSE_NO);
     add_button(Gtk::Stock::OK, Gtk::RESPONSE_OK);

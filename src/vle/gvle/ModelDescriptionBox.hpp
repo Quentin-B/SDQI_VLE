@@ -51,7 +51,7 @@ namespace gvle {
  */
 class ModelDescriptionBox : public Gtk::Dialog
 {
-public :
+public:
     /**
      * A dialog box to change or add a new name and description for a
      * model. If a model is specified, then running this Dialog can change
@@ -78,7 +78,7 @@ public :
      */
     bool run();
 
-private :
+private:
     const std::set < std::string >& m_lst;
     Gtk::Entry*                     m_entry;
     vpz::BaseModel*                   m_model;

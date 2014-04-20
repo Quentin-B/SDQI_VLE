@@ -30,10 +30,10 @@
 
 #include <vle/gvle/ViewDrawingArea.hpp>
 
-namespace vle { namespace vpz {
+ namespace vle { namespace vpz {
 
-    class BaseModel;
-    class CoupledModel;
+ 	class BaseModel;
+ 	class CoupledModel;
 
 }} // namespace vle graph
 
@@ -70,7 +70,7 @@ namespace vle { namespace gvle {
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 */
-	void getCurrentModelInPosition(const std::string& p, int& x, int& y);
+	 void getCurrentModelInPosition(const std::string& p, int& x, int& y);
 
 	/**
 	 * @brief get the position of the output connexion in the current
@@ -79,7 +79,7 @@ namespace vle { namespace gvle {
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 */
-        void getCurrentModelOutPosition(const std::string& p, int& x, int& y);
+	 void getCurrentModelOutPosition(const std::string& p, int& x, int& y);
 
 	/**
 	 * @brief get the position of the input connexion in a model
@@ -90,10 +90,10 @@ namespace vle { namespace gvle {
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 */
-        void getModelInPosition(int xs, int ys,
-				vpz::BaseModel* dst,
-				vpz::BaseModel* center,
-				int&x, int& y);
+	 void getModelInPosition(int xs, int ys,
+	 	vpz::BaseModel* dst,
+	 	vpz::BaseModel* center,
+	 	int&x, int& y);
 
 	/**
 	 * @brief get the position of the output connexion in a model
@@ -104,35 +104,38 @@ namespace vle { namespace gvle {
 	 * @param x the x coordinate
 	 * @param y the y coordinate
 	 */
-	void getModelOutPosition(vpz::BaseModel* src,
-				 int xd, int yd,
-				 vpz::BaseModel* center,
-				 int&x, int& y);
+	 void getModelOutPosition(vpz::BaseModel* src,
+	 	int xd, int yd,
+	 	vpz::BaseModel* center,
+	 	int&x, int& y);
 
 	/**
 	 * Order the models
 	 */
-	virtual void onOrder();
+	 virtual void onOrder();
 
-	void preComputeConnectInfo();
+	 void preComputeConnectInfo();
 
-	std::string getConnectionInfo(int mHighlightLine);
+	 std::string getConnectionInfo(int mHighlightLine);
+	 void label (vpz::BaseModel* src, vpz::BaseModel* dst);
 
-    private:
 
-	void preComputeConnection(int xs, int ys, int xd, int yd,
-	  int ytms, int ybms);
-        virtual void preComputeConnection(vpz::BaseModel* src,
-                                  const std::string& srcport,
-                                  vpz::BaseModel* dst,
-                                  const std::string& dstport);
-	virtual void computeConnection(vpz::BaseModel* src,
-				       const std::string& portsrc,
-				       vpz::BaseModel* dst,
-				       const std::string& portdst, int index);
-	virtual StraightLine computeConnection(int xs, int ys,
-					       int xd, int yd,
-					       int index);
+	private:
+		vpz::CoupledModel* model;
+
+		void preComputeConnection(int xs, int ys, int xd, int yd,
+			int ytms, int ybms);
+		virtual void preComputeConnection(vpz::BaseModel* src,
+			const std::string& srcport,
+			vpz::BaseModel* dst,
+			const std::string& dstport);
+		virtual void computeConnection(vpz::BaseModel* src,
+			const std::string& portsrc,
+			vpz::BaseModel* dst,
+			const std::string& portdst, int index);
+		virtual StraightLine computeConnection(int xs, int ys,
+			int xd, int yd,
+			int index);
 
 	/**
 	 * @brief return the positive solution  in an intersection
@@ -143,9 +146,9 @@ namespace vle { namespace gvle {
 	 * @param xc the x coordinate of the center
 	 * @param yc the y coordinate of the center
 	 */
-	float getPositiveDelta(int xs, int ys,
-			       int xd, int yd,
-			       int xc, int yc);
+	 float getPositiveDelta(int xs, int ys,
+	 	int xd, int yd,
+	 	int xc, int yc);
 
 	/**
 	 * @brief return the negative solution  in an intersection
@@ -156,9 +159,9 @@ namespace vle { namespace gvle {
 	 * @param xc the x coordinate of the center
 	 * @param yc the y coordinate of the center
 	 */
-	float getNegativeDelta(int xs, int ys,
-			       int xd, int yd,
-			       int xc, int yc);
+	 float getNegativeDelta(int xs, int ys,
+	 	int xd, int yd,
+	 	int xc, int yc);
 
 	/**
 	 * @brief get the director coefficient of a line
@@ -167,9 +170,9 @@ namespace vle { namespace gvle {
 	 * @param x2 the x coordinate of the second point
 	 * @param x2 the x coordinate of the second point
 	 */
-	inline float directorCoefficient(float x1, float y1,
-					 float x2, float y2)
-	{ return (y2- y1) / (x2 - x1); }
+	 inline float directorCoefficient(float x1, float y1,
+	 	float x2, float y2)
+	 { return (y2- y1) / (x2 - x1); }
 
 
 	/**

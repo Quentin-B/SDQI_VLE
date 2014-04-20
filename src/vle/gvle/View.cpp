@@ -27,6 +27,7 @@
 
 #include <vle/gvle/GVLEMenuAndToolbar.hpp>
 #include <vle/gvle/ConnectionBox.hpp>
+#include <vle/gvle/DescriptionBox.hpp>
 #include <vle/gvle/GVLE.hpp>
 #include <vle/gvle/Message.hpp>
 #include <vle/gvle/ModelDescriptionBox.hpp>
@@ -39,6 +40,7 @@
 #include <vle/utils/Path.hpp>
 #include <gtkmm/filechooserdialog.h>
 #include <gtkmm/stock.h>
+// #include <vle/gvle/ViewEvent.hpp>
 
 using std::string;
 using std::list;
@@ -291,7 +293,7 @@ void View::delModel(vpz::BaseModel* model)
 {
     if (model) {
         if (gvle::Question(_("Do you really want destroy model ?"))) {
-            if (model->isCoupled()) {
+        if (model->isCoupled()) {
                 mGVLE->delViewOnModel((vpz::CoupledModel*)model);
             }
             mCurrent->delModel(model);
@@ -408,6 +410,70 @@ void View::makeConnection(vpz::BaseModel* src, vpz::BaseModel* dst)
         }
         mGVLE->setModified(true);
     }
+}
+
+void View::makeDescription(vpz::BaseModel* src, vpz::BaseModel* dst)
+{
+    assert(src and dst);
+
+    if (src == mCurrent && dst == mCurrent)
+        return;
+
+    if (src == mCurrent and src->getInputPortList().empty()) {
+        PortDialog box(src, PortDialog::INPUT);
+        if (box.run() == false) {
+            gvle::Error(
+                (fmt(_("Connection problem:\nSource %1%, a coupled "
+                       "model does not have input port")) %
+                 src->getName()).str());
+            return;
+        }
+        mGVLE->setModified(true);
+    }
+    if (dst == mCurrent and dst->getOutputPortList().empty()) {
+        PortDialog box(dst, PortDialog::OUTPUT);
+        if (box.run() == false) {
+            gvle::Error(
+                (fmt(_("Connection problem:\nDestination %1% a "
+                       "coupled model does not have output port")) %
+                 dst->getName()).str());
+            return;
+        }
+        mGVLE->setModified(true);
+    }
+    if (src != mCurrent and src->getOutputPortList().empty()) {
+        PortDialog box(src, PortDialog::OUTPUT);
+        if (box.run() == false) {
+            gvle::Error(
+                (fmt(_("Connection problem:\nSource %1% "
+                       "does not have output port")) %
+                 src->getName()).str());
+            return;
+        }
+        mGVLE->setModified(true);
+    }
+    if (dst != mCurrent and dst->getInputPortList().empty()) {
+        PortDialog box(dst, PortDialog::INPUT);
+        if (box.run() == false) {
+            gvle::Error(
+                (fmt(_("Connection problem:\nDestination %1% "
+                       "does not have input port")) %
+                 dst->getName()).str());
+            return;
+        }
+        mGVLE->setModified(true);
+    }
+
+    DescriptionBox a(mCurrent, src, dst);
+    if (a.run() == Gtk::RESPONSE_OK) {
+        string srcPort, dstPort;
+
+        a.getSelectedInputPort(srcPort);
+        a.getSelectedOutputPort(dstPort);
+        std::string text= mDescriptionBox->retext();
+        mCurrent ->addConnectionDescription(src->getName(),dst->getName(),text);
+    }
+    mGVLE->setModified(true);
 }
 
 void View::selectedWindow()

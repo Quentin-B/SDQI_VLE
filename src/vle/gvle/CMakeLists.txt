@@ -5,7 +5,7 @@ set(GVLE_SOURCES_CPP About.cpp AtomicModelBox.cpp BooleanBox.cpp
   FileTreeView.cpp GVLE.cpp GVLEMenuAndToolbar.cpp
   ImportClassesBox.cpp ImportModelBox.cpp InteractiveTypeBox.cpp
   LaunchSimulationBox.cpp MatrixBox.cpp Message.cpp ModelClassBox.cpp
-  ModelDescriptionBox.cpp Modeling.cpp GlobalPlugin.cpp
+  ModelDescriptionBox.cpp DescriptionBox.cpp Modeling.cpp GlobalPlugin.cpp
   ModelingPlugin.cpp ModelTreeBox.cpp NewDynamicsBox.cpp
   NewModelClassBox.cpp NewTypeBox.cpp ObsAndViewBox.cpp
   OpenModelingPluginBox.cpp OpenPackageBox.cpp OutputPlugin.cpp
@@ -22,7 +22,7 @@ set(GVLE_SOURCES_HPP About.hpp AtomicModelBox.hpp BooleanBox.hpp
   Editor.hpp ExperimentBox.hpp FileTreeView.hpp GVLE.hpp
   GVLEMenuAndToolbar.hpp ImportClassesBox.hpp ImportModelBox.hpp
   InteractiveTypeBox.hpp LaunchSimulationBox.hpp MatrixBox.hpp
-  Message.hpp ModelClassBox.hpp ModelDescriptionBox.hpp Modeling.hpp
+  Message.hpp ModelClassBox.hpp ModelDescriptionBox.hpp DescriptionBox.cpp Modeling.hpp
   GlobalPlugin.hpp ModelingPlugin.hpp ModelTreeBox.hpp
   NewDynamicsBox.hpp NewModelClassBox.hpp NewTypeBox.hpp
   ObsAndViewBox.hpp ObserverPlugin.hpp OpenModelingPluginBox.hpp

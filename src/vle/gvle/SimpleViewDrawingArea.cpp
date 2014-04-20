@@ -33,7 +33,7 @@
 #ifndef M_PI
 #define M_PI           3.14159265358979323846
 #endif
-
+ int first=0;
  namespace vle { namespace gvle {
 
   const gint SimpleViewDrawingArea::MODEL_RADIUS = 22;
@@ -87,115 +87,60 @@
      (textExtents.width / 2)),
     model->y() + (MODEL_RADIUS * 2) +
     MODEL_SPACING_PORT + 10);
-
     mContext->show_text(model->getName());
     mContext->stroke();
-    label();
-
   }
 }
 
-
-void SimpleViewDrawingArea::label()
+void SimpleViewDrawingArea::label(vpz::BaseModel* src1, vpz::BaseModel* dst1)
 {
-  std::vector < StraightLine >::const_iterator itl = mLines.begin();
-  int i =0;
-  int n = 0;
-  int source_1 = 0;
-  int source_2 = 0;
-  int destination_1 = 0;
-  int destination_2 = 0;
-    //cairo_t *cr;
-  while (itl != mLines.end()) {
-     //   if (i != mHighlightLine) {
-            //mContext->set_line_join(Cairo::LINE_JOIN_ROUND);
-     //       setColor(Settings::settings().getLabelColor());
-     //   }
-     //   else
-     //   {
-     //       setColor(Settings::settings().getBackgroundColor());
-     //   }
-     //           mContext->stroke();
 
-    std::vector <Point>::const_iterator iter = itl->begin();
-    while (iter != itl->end()) {
-     //       mContext->line_to(iter->first + mOffset, iter->second + mOffset);
-
-      if (n == 0) {
-        source_1 = iter->first + mOffset;
-        source_2 = iter->second + mOffset;
-      }
-      else if (n == 1) {
-        destination_1 = iter->first + mOffset;
-        destination_2 = iter->second + mOffset;
-      }
-      ++n;
-      ++iter;
-    }
-
-    
-
-    int x = 0, y = 0;
-    x = (source_1 + destination_1) / 2;
-    y = (source_2 + destination_2) / 2;
-
-    Cairo::TextExtents connection_label;
-        //Color color(0.00, 0.00, 0.00);
-    mContext->get_text_extents("Link", connection_label);
-
-
-    mContext->move_to((x - (connection_label.width / 2))-1,
-      y - 5);
-    mContext->select_font_face(Settings::settings().getFont(),
-     Cairo::FONT_SLANT_OBLIQUE,
-     Cairo::FONT_WEIGHT_NORMAL); 
-    mContext->set_font_size(10);       
-    mContext->set_source_rgb (255, 255, 255);
-    mContext->show_text("Link");
-
-    mContext->move_to((x - (connection_label.width / 2))+1,
-      y - 5);
-    mContext->select_font_face(Settings::settings().getFont(),
-     Cairo::FONT_SLANT_OBLIQUE,
-     Cairo::FONT_WEIGHT_NORMAL); 
-    mContext->set_font_size(10);       
-    mContext->set_source_rgb (255, 255, 255);
-
-    mContext->show_text("Link");
-
-
-    mContext->move_to(x - (connection_label.width / 2),
-      y - 5);
-    mContext->select_font_face(Settings::settings().getFont(),
-     Cairo::FONT_SLANT_OBLIQUE,
-     Cairo::FONT_WEIGHT_NORMAL);    
-    mContext->set_font_size(10);
-    mContext->set_source_rgb (255, 0, 255);
-
-    // Test showing the connection description label
-    std::string test;
-    vpz::CoupledModel::DescriptionList allConnections = mCurrent->getAllConnectionDescriptions();
-    if(not allConnections.empty())
+  Cairo::TextExtents connection_label;
+  std::string test;
+  vpz::CoupledModel::DescriptionList allConnections = mCurrent->getAllConnectionDescriptions();
+  if(not allConnections.empty())
+  {
+    for (vpz::CoupledModel::DescriptionList::const_iterator it = allConnections.begin();
+     it != allConnections.end(); ++it) {
+      const std::string& src_dst(it->first);
+    const std::string& src = src_dst.substr(0, src_dst.find('-'));
+    const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
+    const std::string& text = it->second;
+    if (src1->getName()==src&&dst1->getName()==dst)
     {
-        for (vpz::CoupledModel::DescriptionList::const_iterator it = allConnections.begin();
-             it != allConnections.end(); ++it) {
-            const std::string& src_dst(it->first);
-            const std::string& src = src_dst.substr(0, src_dst.find('-'));
-            const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
-            const std::string& text = it->second;
+      mContext->get_text_extents(text, connection_label);
 
-            test += text;
-        }
+      mContext->move_to(((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2))+1,
+        ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
+      mContext->select_font_face(Settings::settings().getFont(),
+       Cairo::FONT_SLANT_OBLIQUE,
+       Cairo::FONT_WEIGHT_NORMAL);    
+      mContext->set_font_size(10);
+      mContext->set_source_rgb (255, 255, 255);
+      mContext->show_text(text);
+
+      mContext->move_to(((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2))-1,
+        ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
+      mContext->select_font_face(Settings::settings().getFont(),
+       Cairo::FONT_SLANT_OBLIQUE,
+       Cairo::FONT_WEIGHT_NORMAL);    
+      mContext->set_font_size(10);
+      mContext->set_source_rgb (255, 255, 255);
+      mContext->show_text(text);
+
+      mContext->move_to((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2),
+        ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
+      mContext->select_font_face(Settings::settings().getFont(),
+       Cairo::FONT_SLANT_OBLIQUE,
+       Cairo::FONT_WEIGHT_NORMAL);    
+      mContext->set_font_size(10);
+      mContext->set_source_rgb (255, 0, 0);
+      mContext->show_text(text);
     }
-    // mContext->show_text("Link");
-    mContext->show_text(test);
-
-    mContext->stroke();
-
-    ++i;
-    ++itl;
-    n=0;
   }
+}
+
+mContext->stroke();
 
 }
 
@@ -315,7 +260,7 @@ void SimpleViewDrawingArea::computeConnection(vpz::BaseModel* src,
  int index)
 {
   int xs, ys, xd, yd;
-
+  label(src,dst);
   if (src == mCurrent) {
     getCurrentModelInPosition(portsrc, xs, ys);
     getModelInPosition(xs, ys, dst, dst, xd, yd);
@@ -354,13 +299,14 @@ SimpleViewDrawingArea::computeConnection(int xs, int ys, int xd, int yd,
 	x2 = x;
 	y2 = x + 1;
 }
-
+// Arrow head
 mContext->move_to(xd, yd);
 mContext->line_to(x + (getNegativeDelta(x, y, x2, y2, x, y) * (x2 - x)),
   y + (getNegativeDelta(x, y, x2, y2, x, y) * (y2 - y)));
 mContext->line_to(x + (getPositiveDelta(x, y, x2, y2, x, y) * (x2 - x)),
   y + (getPositiveDelta(x, y, x2, y2, x, y) * (y2 - y)));
 mContext->line_to(xd, yd);
+mContext->set_source_rgb (0, 0, 0);
 mContext->fill();
 mContext->stroke();
 
@@ -522,60 +468,131 @@ bool SimpleViewDrawingArea::on_button_press_event(GdkEventButton* event)
     case GVLE::VLE_GVLE_POINTER:
     if (event->type == GDK_BUTTON_PRESS and event->button == 1) {
      on_gvlepointer_button_1(model, shiftOrControl);
-     queueRedraw();
-   } else if (event->type == GDK_2BUTTON_PRESS and event->button == 1) {
-     mView->showModel(model);
-   } else if (event->button == 2) {
-     mView->showModel(model);
-   }
-   if (not model) {
-    queueRedraw();
-  }
-  break;
-  case GVLE::VLE_GVLE_ADDMODEL:
-  mView->addAtomicModel(mMouse.get_x(), mMouse.get_y());
-  queueRedraw();
-  break;
-  case GVLE::VLE_GVLE_ADDLINK:
-  if (event->button == 1) {
-    addLinkOnButtonPress(mMouse.get_x(), mMouse.get_y());
-    mPrecMouse = mMouse;
-    queueRedraw();
-  }
-  break;
-  case GVLE::VLE_GVLE_DELETE:
-  delUnderMouse(mMouse.get_x(), mMouse.get_y());
-  queueRedraw();
-  break;
-  case GVLE::VLE_GVLE_QUESTION:
-  mModeling->showDynamics((model) ? model->getName() :
-    mCurrent->getName());
-  break;
-  case GVLE::VLE_GVLE_ZOOM:
-  if (event->button == 1) {
-    mPrecMouse = mMouse;
-    queueRedraw();
-  }
-  queueRedraw();
-  break;
-  case GVLE::VLE_GVLE_PLUGINMODEL:
-  mView->addPluginModel(mMouse.get_x(), mMouse.get_y());
-  queueRedraw();
-  break;
-  case GVLE::VLE_GVLE_ADDCOUPLED:
-  if (event->button == 1) {
-    if (model) {
-      mView->addModelInListModel(model, shiftOrControl);
-    } else {
-      mView->addCoupledModel(mMouse.get_x(), mMouse.get_y());
+
+
+
+     vpz::BaseModel* src = 0;
+     vpz::BaseModel* dst = 0;
+     std::string portsrc, portdst;
+     bool internal = false;
+     bool external = false;
+     int i = 0;
+
+     {
+      vpz::ConnectionList& outs(mCurrent->getInternalInputPortList());
+      vpz::ConnectionList::const_iterator it;
+
+      for (it = outs.begin(); it != outs.end(); ++it) {
+        const vpz::ModelPortList& ports(it->second);
+        vpz::ModelPortList::const_iterator jt ;
+
+        for (jt = ports.begin(); jt != ports.end(); ++jt) {
+          if (i == mHighlightLine) {
+            portsrc = it->first;
+            dst = jt->first;
+            portdst = jt->second;
+            internal = true;
+          }
+          ++i;
+        }
+      }
     }
-  } else if (event->button == 3) {
-    mView->clearSelectedModels();
-  }
+
+    {
+      const vpz::ModelList& children(mCurrent->getModelList());
+      vpz::ModelList::const_iterator it;
+
+      for (it = children.begin(); it != children.end(); ++it) {
+        const vpz::ConnectionList& outs(it->second->getOutputPortList());
+        vpz::ConnectionList::const_iterator jt;
+
+        for (jt = outs.begin(); jt != outs.end(); ++jt) {
+          const vpz::ModelPortList&  ports(jt->second);
+          vpz::ModelPortList::const_iterator kt;
+
+          for (kt = ports.begin(); kt != ports.end(); ++kt) {
+            if (i == mHighlightLine) {
+              src = it->second;
+              portsrc = jt->first;
+              dst = kt->first;
+              portdst = kt->second;
+              external = (dst == mCurrent);
+            }
+            ++i;
+          }
+        }
+      }
+    }
+
+    if (src or dst) {
+      if (internal) {
+        mView->makeDescription(src, dst);
+
+           // mCurrent->delInputConnection(portsrc, dst, portdst);
+      } else if (external) {
+        mView->makeDescription(src, dst);
+       //     mCurrent->delOutputConnection(src, portsrc, portdst);
+      } else {
+        mView->makeDescription(src, dst);
+           // mCurrent->delInternalConnection(src, portsrc, dst, portdst);
+      }
+    }
+    mHighlightLine = -1;
+
+    queueRedraw();
+  } else if (event->type == GDK_2BUTTON_PRESS and event->button == 1) {
+   mView->showModel(model);
+ } else if (event->button == 2) {
+   mView->showModel(model);
+ }
+ if (not model) {
   queueRedraw();
-  break;
-  default:
-  break;
+}
+break;
+case GVLE::VLE_GVLE_ADDMODEL:
+mView->addAtomicModel(mMouse.get_x(), mMouse.get_y());
+queueRedraw();
+break;
+case GVLE::VLE_GVLE_ADDLINK:
+if (event->button == 1) {
+  addLinkOnButtonPress(mMouse.get_x(), mMouse.get_y());
+  mPrecMouse = mMouse;
+  queueRedraw();
+}
+break;
+case GVLE::VLE_GVLE_DELETE:
+delUnderMouse(mMouse.get_x(), mMouse.get_y());
+queueRedraw();
+break;
+case GVLE::VLE_GVLE_QUESTION:
+mModeling->showDynamics((model) ? model->getName() :
+  mCurrent->getName());
+break;
+case GVLE::VLE_GVLE_ZOOM:
+if (event->button == 1) {
+  mPrecMouse = mMouse;
+  queueRedraw();
+}
+queueRedraw();
+break;
+case GVLE::VLE_GVLE_PLUGINMODEL:
+mView->addPluginModel(mMouse.get_x(), mMouse.get_y());
+queueRedraw();
+break;
+case GVLE::VLE_GVLE_ADDCOUPLED:
+if (event->button == 1) {
+  if (model) {
+    mView->addModelInListModel(model, shiftOrControl);
+  } else {
+    mView->addCoupledModel(mMouse.get_x(), mMouse.get_y());
+  }
+} else if (event->button == 3) {
+  mView->clearSelectedModels();
+}
+queueRedraw();
+break;
+default:
+break;
 }
 return true;
 }

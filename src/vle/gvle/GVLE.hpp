@@ -31,6 +31,8 @@
 #include <vle/gvle/DllDefines.hpp>
 #include <vle/gvle/PluginFactory.hpp>
 #include <vle/gvle/ConditionsBox.hpp>
+#include <vle/gvle/ConnectionBox.hpp>
+ #include <vle/gvle/DescriptionBox.hpp>
 #include <vle/gvle/ModelTreeBox.hpp>
 #include <vle/gvle/ModelClassBox.hpp>
 #include <vle/gvle/CutCopyPaste.hpp>
@@ -59,6 +61,8 @@ class FileTreeView;
 class GVLEMenuAndToolbar;
 class Modeling;
 class AtomicModelBox;
+class ConnectionBox;
+class DescriptionBox;
 class ImportModelBox;
 class ImportClassesBox;
 class CoupledModelBox;
@@ -915,6 +919,8 @@ private:
 
     /* Dialog boxes */
     AtomicModelBox*                 mAtomicBox;
+    ConnectionBox*                  mConnectionBox;
+    DescriptionBox*                 mDescriptionBox;
     ImportModelBox*                 mImportModelBox;
     CoupledModelBox*                mCoupledBox;
     ImportClassesBox*               mImportClassesBox;

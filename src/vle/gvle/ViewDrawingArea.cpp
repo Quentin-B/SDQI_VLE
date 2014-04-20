@@ -339,6 +339,7 @@ void ViewDrawingArea::drawHighlightConnection()
         }
 mContext->stroke();
     }
+
 }
 
 void ViewDrawingArea::drawChildrenModels()
@@ -540,11 +541,13 @@ bool ViewDrawingArea::on_expose_event(GdkEventExpose*)
                     ? 0.5 : 0.0;
                 draw();
                 mNeedRedraw = false;
+
             }
             mWin->draw_drawable(mWingc, mBuffer, 0, 0, 0, 0, -1, -1);
 }
     }
     return true;
+
 }
 
 bool ViewDrawingArea::on_motion_notify_event(GdkEventMotion* event)
@@ -575,8 +578,10 @@ bool ViewDrawingArea::on_motion_notify_event(GdkEventMotion* event)
                 queueRedraw();
             }
         } else {
+
             highlightLine((int)mMouse.get_x(), (int)mMouse.get_y());
             mPrecMouse = mMouse;
+
         }
         break;
     case GVLE::VLE_GVLE_ZOOM:
@@ -610,6 +615,7 @@ void ViewDrawingArea::on_realize()
     mIsRealized = true;
     newSize();
     queueRedraw();
+
 }
 
 void ViewDrawingArea::on_gvlepointer_button_1(vpz::BaseModel* mdl,
@@ -660,6 +666,7 @@ void ViewDrawingArea::on_gvlepointer_button_1(vpz::BaseModel* mdl,
         mPrecMouse = mMouse;
         queueRedraw();
     }
+
     queueRedraw();
 }
 
@@ -667,7 +674,9 @@ void ViewDrawingArea::delUnderMouse(int x, int y)
 {
     vpz::BaseModel* model = mCurrent->find(x, y);
     if (model) {
+  
         mView->delModel(model);
+
     } else {
         delConnection();
         mGVLE->setModified(true);
@@ -831,7 +840,8 @@ void ViewDrawingArea::delConnection()
         } else if (external) {
             mCurrent->delOutputConnection(src, portsrc, portdst);
         } else {
-            mCurrent->delInternalConnection(src, portsrc, dst, portdst);
+           mCurrent->delInternalConnection(src, portsrc, dst, portdst);
+           mCurrent->vpz::CoupledModel::addConnectionDescription(src->getName(),dst->getName(),"");
         }
     }
     mHighlightLine = -1;
@@ -1020,6 +1030,7 @@ void ViewDrawingArea::drawConnection()
     preComputeConnectInfo();
     computeConnection();
     drawLines();
+    computeConnection();
 }
 
 void ViewDrawingArea::maxModelWidthHeight()

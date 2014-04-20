@@ -50,6 +50,7 @@ class CompleteViewDrawingArea;
 class View
 {
 public:
+    
     View(Modeling* m, vpz::CoupledModel* c, size_t index, GVLE* app);
 
     virtual ~View();
@@ -259,6 +260,8 @@ public:
      * @param x new position of plugin model
      * @param y new position of plugin model
      */
+
+     
     void addPluginModel(int x, int y);
 
     /**
@@ -309,6 +312,7 @@ public:
      */
     void makeConnection(vpz::BaseModel* src, vpz::BaseModel* dst);
 
+    void makeDescription(vpz::BaseModel* src, vpz::BaseModel* dst);
     /**
      * To flash window, to inform user of this selected window.
      */
@@ -323,6 +327,7 @@ private:
 
     CompleteViewDrawingArea*    mCompleteDrawing;
     SimpleViewDrawingArea*      mSimpleDrawing;
+    DescriptionBox*             mDescriptionBox;
 
     vpz::ModelList            mSelectedModels;
     vpz::BaseModel*               mDestinationModel;

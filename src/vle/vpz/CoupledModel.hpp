@@ -45,12 +45,7 @@ namespace vle { namespace vpz {
         typedef std::vector < std::string > StringList;
         typedef std::map <std::string, ConnectionList> ModelConnections;
         typedef std::map <std::string, std::string> DescriptionList;
-       	struct ConnectionDescription
-        {
-            BaseModel* model_1;
-            BaseModel* model_2;
-            std::string text;
-        };
+
         /**
          * @brief Constructor to intialize parent, position (0,0), size (0,0)
          * and name.
@@ -58,31 +53,31 @@ namespace vle { namespace vpz {
          * @param parent the parent of this coupled model, can be null if parent
          * does not exist.
          */
-        CoupledModel(const std::string& name, CoupledModel* parent);
+         CoupledModel(const std::string& name, CoupledModel* parent);
 
-        CoupledModel(const CoupledModel& mdl);
+         CoupledModel(const CoupledModel& mdl);
 
-        CoupledModel& operator=(const CoupledModel& mdl);
+         CoupledModel& operator=(const CoupledModel& mdl);
 
-        virtual BaseModel* clone() const
-        { return new CoupledModel(*this); }
+         virtual BaseModel* clone() const
+         { return new CoupledModel(*this); }
 
         /**
          * @brief Delete his children.
          */
-        virtual ~CoupledModel();
+         virtual ~CoupledModel();
 
         /**
          * @brief Return true, CoupledModel is a coupled model.
          * @return true.
          */
-        virtual bool isCoupled() const { return true; }
+         virtual bool isCoupled() const { return true; }
 
         /**
          * @brief Write the coupled model in the output stream.
          * @param out output stream.
          */
-        void writeXML(std::ostream& out) const;
+         void writeXML(std::ostream& out) const;
 
         ////
         //// Specific functions.
@@ -97,7 +92,7 @@ namespace vle { namespace vpz {
          * @throw Exception::Internal if model is null or already exist in
          * hierarchy.
          */
-        void addModel(BaseModel* model);
+         void addModel(BaseModel* model);
 
         /**
          * @brief Add a model into the model list. Parent is set to thie coupled
@@ -105,7 +100,7 @@ namespace vle { namespace vpz {
          * @param model The model to add.
          * @param name The new name of the model.
          */
-        void addModel(BaseModel* model, const std::string& name);
+         void addModel(BaseModel* model, const std::string& name);
 
         /**
          * @brief add a new atomic model to the list. Parent is set to this
@@ -118,7 +113,7 @@ namespace vle { namespace vpz {
          * @throw Exception::Internal if name already exist in this
          * coupledmodel.
          */
-        AtomicModel* addAtomicModel(const std::string& name);
+         AtomicModel* addAtomicModel(const std::string& name);
 
         /**
          * @brief add a new coupled model to the list. Parent is set to this
@@ -131,7 +126,7 @@ namespace vle { namespace vpz {
          * @throw Exception::Internal if name already exist in this
          * coupledmodel.
          */
-        CoupledModel* addCoupledModel(const std::string& name);
+         CoupledModel* addCoupledModel(const std::string& name);
 
         /**
          * Delete a model of model list. If connection with this model exist,
@@ -141,27 +136,27 @@ namespace vle { namespace vpz {
          *
          * @throw Exception::Internal if model is null.
          */
-        void delModel(BaseModel* model);
+         void delModel(BaseModel* model);
 
         /**
          * @brief Delete all model from this coupled model. If connection
          * exist, there are destroy.
          */
-        void delAllModel();
+         void delAllModel();
 
         /**
          * @brief Attach an existing model into this coupled model. Parent will
          * be informed and detached of this model.
          * @param model a model to attach.
          */
-        void attachModel(BaseModel* model);
+         void attachModel(BaseModel* model);
 
         /**
          * @brief Attach a list of models into this coupled model. Parent will
          * be informed and detached of this model.
          * @param models a list of models.
          */
-        void attachModels(ModelList& models);
+         void attachModels(ModelList& models);
 
         /**
          * @brief Detach a model (not delete !) of model list, and parent is
@@ -169,7 +164,7 @@ namespace vle { namespace vpz {
          *
          * @param model a model to detach.
          */
-        void detachModel(BaseModel* model);
+         void detachModel(BaseModel* model);
 
         /**
          * @brief Detach a list of model from this coupled model. For each
@@ -177,7 +172,7 @@ namespace vle { namespace vpz {
          *
          * @param models a list of model.
          */
-        void detachModels(const ModelList& models);
+         void detachModels(const ModelList& models);
 
         /**
          * Find a model, atomic or coupled, with a specified name.
@@ -301,7 +296,7 @@ namespace vle { namespace vpz {
          * @throw Exception::Internal if old does not exist or if old or mdl
          * are null.
          */
-        void replace(BaseModel* old, BaseModel* mdl);
+         void replace(BaseModel* old, BaseModel* mdl);
 
         /**
          * @brief Return a string representation of internal connection for the
@@ -327,7 +322,7 @@ namespace vle { namespace vpz {
          * @throw vpz::DevsGraphError if a model does not belong this coupled
          * model.
          */
-        StringList getBasicConnections(const ModelList& models) const;
+         StringList getBasicConnections(const ModelList& models) const;
 
         /**
          * @brief Set a list of connection to this coupled model.Each connection
@@ -350,9 +345,9 @@ namespace vle { namespace vpz {
          * @throw DevsGraphError if a model not exist, if a port of a model not
          * exist or if a connection already exist.
          */
-        void setBasicConnections(const StringList& lst);
+         void setBasicConnections(const StringList& lst);
 
-        void displace(ModelList& models, CoupledModel* destination);
+         void displace(ModelList& models, CoupledModel* destination);
 
         /**
          * @brief save all the input connections in relation with
@@ -361,7 +356,7 @@ namespace vle { namespace vpz {
          * @return a list of the connections
          *
          */
-        ModelConnections saveInputConnections(
+         ModelConnections saveInputConnections(
             ModelList& models);
 
         /**
@@ -371,7 +366,7 @@ namespace vle { namespace vpz {
          * @return a list of the connections
          *
          */
-        ModelConnections  saveOutputConnections(
+         ModelConnections  saveOutputConnections(
             ModelList& models);
 
         /**
@@ -382,9 +377,9 @@ namespace vle { namespace vpz {
          * @param conenction the old connections
          *
          */
-        void restoreInputConnections(ModelList& models,
-                                     CoupledModel* destination,
-                                     ModelConnections connection);
+         void restoreInputConnections(ModelList& models,
+           CoupledModel* destination,
+           ModelConnections connection);
         /**
          * @brief restore the output connections in relation with the
          * selected models, with a new Coupled model
@@ -393,50 +388,50 @@ namespace vle { namespace vpz {
          * @param conenction the old connections
          *
          */
-        void restoreOutputConnections(CoupledModel* destination,
-                                      ModelConnections connections);
+         void restoreOutputConnections(CoupledModel* destination,
+          ModelConnections connections);
 
         /**
          * @brief init the connections models
          */
-        void initConnections();
+         void initConnections();
 
         /**
          * @brief init the internal input connections
          */
-        void initInternalInputConnections();
+         void initInternalInputConnections();
 
         /**
          * @brief init the internal output connections
          */
-        void initInternalOutputConnections();
+         void initInternalOutputConnections();
 
         /**
          * @brief calculate the distance between two models
          * @param src the first model
          * @param dst the second model
          */
-        float distanceModels(BaseModel* src, BaseModel* dst);
+         float distanceModels(BaseModel* src, BaseModel* dst);
 
         /**
          * @brief calculate the repulsion force for all models
          */
-        void repulsionForce();
+         void repulsionForce();
 
         /**
          * @brief calculate the atttraction force of all models
          */
-        void attractionForce();
+         void attractionForce();
 
         /**
          * @brief set the new position
          */
-        bool newPosition();
+         bool newPosition();
 
         /**
          * @brief order the models
          */
-        void order();
+         void order();
 
         /**
          * @brief return true if the model list has no connection with another
@@ -444,7 +439,7 @@ namespace vle { namespace vpz {
          * @param lst list of models to test
          * @return true if model is found, else false
          */
-        bool hasConnectionProblem(const ModelList& lst) const;
+         bool hasConnectionProblem(const ModelList& lst) const;
 
         /**
          * @brief Return true if the connection list have connection with models
@@ -470,7 +465,7 @@ namespace vle { namespace vpz {
          *
          * @return A reference to the founded model otherwise null.
          */
-        BaseModel* find(int x, int y) const;
+         BaseModel* find(int x, int y) const;
 
         /**
          * @brief Return a reference to the children Model under the
@@ -483,7 +478,7 @@ namespace vle { namespace vpz {
          *
          * @return A reference to the founded model otherwise null.
          */
-        BaseModel* find(int x, int y, int width, int height) const;
+         BaseModel* find(int x, int y, int width, int height) const;
 
         /**
          * @brief Build a new string for model name. This function assert that
@@ -493,7 +488,7 @@ namespace vle { namespace vpz {
          *
          * @return a new model name.
          */
-        std::string buildNewName(const std::string& prefix) const;
+         std::string buildNewName(const std::string& prefix) const;
 
         /**
          * @brief Test if the name already exist in model list.
@@ -502,38 +497,38 @@ namespace vle { namespace vpz {
          *
          * @return true if model name exist, false otherwise.
          */
-        inline bool exist(const std::string& name) const
-        { return m_modelList.find(name) != m_modelList.end(); }
+         inline bool exist(const std::string& name) const
+         { return m_modelList.find(name) != m_modelList.end(); }
 
         //
         /// Get functions.
         //
 
-        inline const ModelList& getModelList() const
-        { return m_modelList; }
+         inline const ModelList& getModelList() const
+         { return m_modelList; }
 
-        inline ModelList& getModelList()
-        { return m_modelList; }
+         inline ModelList& getModelList()
+         { return m_modelList; }
 
-        inline const ConnectionList& getInternalInputPortList() const
-        { return m_internalInputList; }
+         inline const ConnectionList& getInternalInputPortList() const
+         { return m_internalInputList; }
 
-        inline const ConnectionList& getInternalOutputPortList() const
-        { return m_internalOutputList; }
+         inline const ConnectionList& getInternalOutputPortList() const
+         { return m_internalOutputList; }
 
-        inline ConnectionList& getInternalInputPortList()
-        { return m_internalInputList; }
+         inline ConnectionList& getInternalInputPortList()
+         { return m_internalInputList; }
 
-        inline ConnectionList& getInternalOutputPortList()
-        { return m_internalOutputList; }
+         inline ConnectionList& getInternalOutputPortList()
+         { return m_internalOutputList; }
 
-        ModelPortList& getInternalInPort(const std::string& name);
+         ModelPortList& getInternalInPort(const std::string& name);
 
-        const ModelPortList& getInternalInPort(const std::string& name) const;
+         const ModelPortList& getInternalInPort(const std::string& name) const;
 
-        ModelPortList& getInternalOutPort(const std::string& name);
+         ModelPortList& getInternalOutPort(const std::string& name);
 
-        const ModelPortList& getInternalOutPort(const std::string& name) const;
+         const ModelPortList& getInternalOutPort(const std::string& name) const;
 
         ////
         //// Functors
@@ -543,8 +538,8 @@ namespace vle { namespace vpz {
          * @brief A functor to easily attach ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct AttachModel
-        {
+         struct AttachModel
+         {
             AttachModel(CoupledModel* model) : model(model) { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -557,11 +552,11 @@ namespace vle { namespace vpz {
          * @brief A functor to easily updateDynamics of ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct UpdateDynamics
-        {
+         struct UpdateDynamics
+         {
             UpdateDynamics(const std::string& oldname,
-                           const std::string& newname) :
-                oldname(oldname), newname(newname)
+             const std::string& newname) :
+            oldname(oldname), newname(newname)
             { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -575,10 +570,10 @@ namespace vle { namespace vpz {
          * @brief A functor to easily purgeDynamics of ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct PurgeDynamics
-        {
+         struct PurgeDynamics
+         {
             PurgeDynamics(const std::set < std::string > & dynamics) :
-                dynamics(dynamics)
+            dynamics(dynamics)
             { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -591,11 +586,11 @@ namespace vle { namespace vpz {
          * @brief A functor to easily updateObservable of ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct UpdateObservable
-        {
+         struct UpdateObservable
+         {
             UpdateObservable(const std::string& oldname,
-                             const std::string& newname) :
-                oldname(oldname), newname(newname)
+               const std::string& newname) :
+            oldname(oldname), newname(newname)
             { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -609,10 +604,10 @@ namespace vle { namespace vpz {
          * @brief A functor to easily purgeObservable of ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct PurgeObservable
-        {
+         struct PurgeObservable
+         {
             PurgeObservable(const std::set < std::string > & observables) :
-                observables(observables)
+            observables(observables)
             { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -625,11 +620,11 @@ namespace vle { namespace vpz {
          * @brief A functor to easily updateConditions of ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct UpdateConditions
-        {
+         struct UpdateConditions
+         {
             UpdateConditions(const std::string& oldname,
-                             const std::string& newname) :
-                oldname(oldname), newname(newname)
+               const std::string& newname) :
+            oldname(oldname), newname(newname)
             { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -643,10 +638,10 @@ namespace vle { namespace vpz {
          * @brief A functor to easily purgeConditions of ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct PurgeConditions
-        {
+         struct PurgeConditions
+         {
             PurgeConditions(const std::set < std::string > & conditions) :
-                conditions(conditions)
+            conditions(conditions)
             { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -659,8 +654,8 @@ namespace vle { namespace vpz {
          * @brief A functor to easily detach ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct DetachModel
-        {
+         struct DetachModel
+         {
             DetachModel(CoupledModel* model) : model(model) { }
 
             inline void operator()(const ModelList::value_type& value)
@@ -673,8 +668,8 @@ namespace vle { namespace vpz {
          * @brief A functor to easily delete ModelList::value_type. Use it with
          * std::for_each.
          */
-        struct DeleteModel
-        {
+         struct DeleteModel
+         {
             DeleteModel(CoupledModel* model) : model(model) { }
 
             void operator()(ModelList::value_type& value)
@@ -691,24 +686,24 @@ namespace vle { namespace vpz {
          * @brief A functor to easily test a position (x, y) in a range of a
          * ModelList::value_type. Use it with std::find_if, etc.
          */
-        struct IsInModelList
-        {
+         struct IsInModelList
+         {
             IsInModelList(int x, int y) : x(x), y(y) { }
 
             inline bool operator()(const ModelList::value_type& value) const
             { return value.second->x() <= x and x <= value.second->x() +
                 value.second->width() and value.second->y() <= y and y <=
-                    value.second->y() + value.second->height(); };
+                value.second->y() + value.second->height(); };
 
                 int x, y;
-        };
+            };
 
         /**
          * @brief A functor to easily clone a ModelList. To use with the
          * for_each algorith.
          */
-        struct CloneModel
-        {
+         struct CloneModel
+         {
             CoupledModel* parent;
 
             CloneModel(CoupledModel* parent) : parent(parent) { }
@@ -721,7 +716,7 @@ namespace vle { namespace vpz {
          * @brief Write the hierarchy of models into the output stream.
          * @param out The output stream.
          */
-        void write(std::ostream& out) const;
+         void write(std::ostream& out) const;
 
         /**
 	 * @brief Update the dynamics of each AtomicModel
@@ -729,14 +724,14 @@ namespace vle { namespace vpz {
 	 * @param oldname the old name of the dynamics.
 	 * @param newname the new name of the dynamics.
 	 */
-        virtual void updateDynamics(const std::string& oldname,
-                                    const std::string& newname);
+     virtual void updateDynamics(const std::string& oldname,
+        const std::string& newname);
 
         /**
 	 * @brief purge the dymamics not present in the list
 	 * @param dynamicslist a list of dynamics name
 	 */
-	virtual void purgeDynamics(const std::set < std::string >& dynamicslist);
+    virtual void purgeDynamics(const std::set < std::string >& dynamicslist);
 
         /**
 	 * @brief Update the Observable of each AtomicModels where an
@@ -744,15 +739,15 @@ namespace vle { namespace vpz {
 	 * @param oldname the old name of the observable.
 	 * @param newname the new name of the observable.
 	 */
-	virtual void updateObservable(const std::string& oldname,
-                                      const std::string& newname);
+    virtual void updateObservable(const std::string& oldname,
+      const std::string& newname);
 
         /**
 	 * @brief purge the observables references of the AtomicModels
 	 * where the observable is not present in the list, for each model.
 	 * @param observablelist a list of observable name
 	 */
-	virtual void purgeObservable(const std::set < std::string >& observablelist);
+    virtual void purgeObservable(const std::set < std::string >& observablelist);
 
         /**
 	 * @brief Update the Conditions of the AtomicModel where an
@@ -760,26 +755,27 @@ namespace vle { namespace vpz {
 	 * @param oldname the old name of the observable.
 	 * @param newname the new name of the observable.
 	 */
-	virtual void updateConditions(const std::string& oldname,
-                                      const std::string& newname);
+    virtual void updateConditions(const std::string& oldname,
+      const std::string& newname);
 
         /**
 	 * @brief purge the Conditions references of the model where the
 	 * Condition is not present in the list, for each model.
 	 * @param conditionlist a list of condition name
 	 */
-	virtual void purgeConditions(const std::set < std::string >& conditionlist);
+    virtual void purgeConditions(const std::set < std::string >& conditionlist);
 
-    private:
-        void delConnection(BaseModel* src, const std::string& portSrc,
-                           BaseModel* dst, const std::string& portDst);
+private:
+
+    void delConnection(BaseModel* src, const std::string& portSrc,
+     BaseModel* dst, const std::string& portDst);
 
         /**
          * @brief Copy input and output connections list from src to dst. dst.
          * @param src The source of the copy.
          * @param dst The destination of the copy.
          */
-        void copyConnection(const ConnectionList& src, ConnectionList& dst);
+         void copyConnection(const ConnectionList& src, ConnectionList& dst);
 
         /**
          * @brief Copy the connection from ModelPortList src to the
@@ -787,7 +783,7 @@ namespace vle { namespace vpz {
          * @param src The source of the copy.
          * @param dst The destination of the copy.
          */
-        void copyPort(const ModelPortList& src, ModelPortList& dst);
+         void copyPort(const ModelPortList& src, ModelPortList& dst);
 
         /**
          * @brief Copy internal connections list from src to dst.
@@ -796,10 +792,10 @@ namespace vle { namespace vpz {
          * @param parentSrc Parent of src's ConnectionList.
          * @param parentDst Parent of dst's ConnectionList.
          */
-        void copyInternalConnection(const ConnectionList& src,
-                                    ConnectionList& dst,
-                                    const BaseModel& parentSrc,
-                                    BaseModel& parentDst);
+         void copyInternalConnection(const ConnectionList& src,
+            ConnectionList& dst,
+            const BaseModel& parentSrc,
+            BaseModel& parentDst);
 
         /**
          * @brief Copy the connection from ModelPortList src to the
@@ -812,11 +808,11 @@ namespace vle { namespace vpz {
         void copyInternalPort(const ModelPortList& src, ModelPortList& dst,
                               const BaseModel& parentSrc, BaseModel& parentDst);
 
+        std::string checkModelExistance(const std::string& name) const;
         ModelList       m_modelList;
         ConnectionList  m_internalInputList;
         ConnectionList  m_internalOutputList;
         DescriptionList m_descriptionList;
-        std::vector<ConnectionDescription> m_connectionDescriptionList;
 
         /* Connections */
         std::vector < BaseModel* > m_srcConnections;

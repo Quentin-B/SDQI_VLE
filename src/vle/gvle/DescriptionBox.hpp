@@ -1,38 +1,14 @@
-/*
- * This file is part of VLE, a framework for multi-modeling, simulation
- * and analysis of complex dynamical systems.
- * http://www.vle-project.org
- *
- * Copyright (c) 2003-2014 Gauthier Quesnel <quesnel@users.sourceforge.net>
- * Copyright (c) 2003-2014 ULCO http://www.univ-littoral.fr
- * Copyright (c) 2007-2014 INRA http://www.inra.fr
- *
- * See the AUTHORS or Authors.txt file for copyright owners and
- * contributors
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or (at
- * your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 
-#ifndef GUI_CONNECTIONBOX_HPP
-#define GUI_CONNECTIONBOX_HPP
+#ifndef GUI_DescriptionBox_HPP
+#define GUI_DescriptionBox_HPP
 
 #include <gtkmm/dialog.h>
 #include <gtkmm/label.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/box.h>
 #include <vle/gvle/ComboboxString.hpp>
+#include <vle/gvle/SimpleViewDrawingArea.hpp>
 
 namespace vle
 {
@@ -51,10 +27,10 @@ namespace gvle {
 /**
  * @brief A Gtk::Window to allow user to connect Model Atomic or Coupled.
  */
-class ConnectionBox : public Gtk::Dialog
+class DescriptionBox : public Gtk::Dialog
 {
 public:
-    ConnectionBox(vpz::CoupledModel* parent, vpz::BaseModel* src,
+    DescriptionBox(vpz::CoupledModel* parent, vpz::BaseModel* src,
                   vpz::BaseModel* dst);
 
     /**
@@ -74,6 +50,8 @@ public:
     void getSelectedOutputPort(std::string& name) const {
         name.assign(m_comboOutput.get_active_string());
     }
+    bool run();
+std::string retext();
 
 private:
     /**
@@ -96,6 +74,13 @@ private:
     void assingComboOutputPort(vpz::CoupledModel* parent,
                                vpz::BaseModel* dst);
 
+    void addDes(vpz::CoupledModel* parent,const std::string& src,
+                                      const std::string& dst,
+                                      const std::string& text);
+         void queueRedraw()
+          {  queue_draw(); }
+    
+
 private:
     Gtk::VBox                   m_vbox;
     Gtk::HBox                   m_hbox;
@@ -103,18 +88,23 @@ private:
     Gtk::Frame                  m_left;
     Gtk::VBox                   m_left2;
     Gtk::Label                  m_labelInput;
-    gvle::ComboBoxString     m_comboInput;
+    gvle::ComboBoxString        m_comboInput;
     Gtk::Frame                  m_right;
     Gtk::VBox                   m_right2;
     Gtk::Label                  m_labelOutput;
-    gvle::ComboBoxString     m_comboOutput;
+    gvle::ComboBoxString        m_comboOutput;
+    SimpleViewDrawingArea*      mSimpleViewDrawingArea;
 
 
     Gtk::Label                  m_labelDescription;
     Gtk::Label                  m_description;
-        Gtk::Entry*                     m_entry;
-    vpz::BaseModel*                   m_model;
-        Gtk::HBox                       mHBox;
+    Gtk::Entry*                 m_entry;
+    vpz::BaseModel*             m_model;
+    Gtk::HBox                   mHBox;
+
+    vpz::BaseModel*             src1;
+    vpz::BaseModel*             dst1;
+    vpz::CoupledModel*          parent1;
         
 };
 
