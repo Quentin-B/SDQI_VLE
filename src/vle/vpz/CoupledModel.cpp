@@ -908,15 +908,16 @@ void CoupledModel::writeConnections(std::ostream& out) const
             }
         }
     }
-    writeDescriptions(out);
+
 
 }
 
 void CoupledModel::writeDescriptions(std::ostream& out) const
 {
+	out << "<descriptions>\n";
 	if(not m_descriptionList.empty())
 	{
-		out << "<descriptions>\n";
+
 		for (DescriptionList::const_iterator it = m_descriptionList.begin();
 			 it != m_descriptionList.end(); ++it) {
 			const std::string& src_dst(it->first);
@@ -932,8 +933,9 @@ void CoupledModel::writeDescriptions(std::ostream& out) const
                 out << "<description origin=\""+ src + "\" destination=\""+ dst + "\" text=\""+ text + "\"/>\n";
             }
 		}
-		out << "</descriptions>\n";
+
 	}
+	out << "</descriptions>\n";
 
 }
 void CoupledModel::write(std::ostream& out) const
@@ -1022,6 +1024,7 @@ void CoupledModel::writeConnection(std::ostream& out) const
     out << "<connections>\n";
     writeConnections(out);
     out << "</connections>\n";
+    writeDescriptions(out);
 }
 
 BaseModel* CoupledModel::find(int x, int y) const

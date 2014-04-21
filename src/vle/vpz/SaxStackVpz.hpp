@@ -163,7 +163,7 @@ namespace vle {
 		 * @throw utils::SaxParserError if stack is empty or parent is not
 		 * Descriptions.
 		 */
-		void pushDescription(const xmlChar** att);
+		void pushDescription();
 
         /**
          * @brief Push a Dynamics into the stack.
@@ -335,7 +335,7 @@ namespace vle {
          */
         void buildConnection();
 
-        void buildDescription();
+        void buildDescription(const xmlChar** att);
 
         /**
          * @brief Get the top of the stack.

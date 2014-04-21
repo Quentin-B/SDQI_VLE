@@ -477,12 +477,11 @@ void SaxParser::onDestination(const xmlChar** att)
 
 void SaxParser::onDescriptions(const xmlChar**)
 {
-    m_vpzstack.pushDescriptions();
 }
 
 void SaxParser::onDescription(const xmlChar** att)
 {
-    m_vpzstack.pushDescription(att);
+    m_vpzstack.buildDescription(att);
 }
 
 void SaxParser::onDynamics(const xmlChar**)
@@ -736,12 +735,10 @@ void SaxParser::onEndConnection()
 
 void SaxParser::onEndDescriptions()
 {
-    delete m_vpzstack.pop();
 }
 
 void SaxParser::onEndDescription()
 {
-	m_vpzstack.buildDescription();
 }
 
 void SaxParser::onEndVLEProject()

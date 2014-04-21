@@ -118,6 +118,12 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
         "     <in><port name=\"in\"/></in>\n"
         "     <out><port name=\"out\"/></out>\n"
         "    </model>\n"
+        "    <model name=\"atom3\" type=\"atomic\""
+        "           observables=\"\" conditions=\"\" dynamics=\"\">\n"
+        "     <in><port name=\"in3\"/></in>\n"
+        "     <out><port name=\"out3\"/></out>\n"
+        "    </model>\n"
+
         "   </submodels>\n"
         "   <connections>\n"
         "    <connection type=\"internal\">\n"
@@ -131,11 +137,12 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
         "    <connection type=\"output\">"
         "     <origin model=\"atom2\" port=\"out\" />\n"
         "     <destination model=\"test2\" port=\"o\" />\n"
-        "    </connection>\n"
-		"   <descriptions>\n"
-		"   	<description origin=\"atom1\" destination=\"atom2\" text=\"Hello World\" />\n"
-		"   </descriptions>\n"
+        "    </connection>\n"	
         "   </connections>\n"
+	"   <descriptions>\n"
+	"   	<description origin=\"atom1\" destination=\"atom2\" text=\"Test Desc 1\" />\n"
+	"   	<description origin=\"atom2\" destination=\"atom3\" text=\"Test Desc 2\" />\n"
+	"   </descriptions>\n"
         "  </model>\n"
         " </structures>\n"
         "</vle_project>\n";
@@ -169,7 +176,9 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
     BOOST_REQUIRE(cpl->existInputConnection("i", "atom1", "in"));
     BOOST_REQUIRE(cpl->existOutputConnection("atom2", "out", "o"));
     BOOST_REQUIRE(cpl->existInternalConnection("atom1", "out", "atom2", "in"));
-    std::cout << "description test: " << cpl->getConnectionDescription("atom1","atom2");
+    BOOST_CHECK_EQUAL(cpl->getConnectionDescription("atom1","atom2"), "Test Desc 1");
+    BOOST_CHECK_EQUAL(cpl->getConnectionDescription("atom2","atom3"), "Test Desc 2");
+
 }
 
 BOOST_AUTO_TEST_CASE(dynamic_vpz)
