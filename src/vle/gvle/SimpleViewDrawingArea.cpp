@@ -105,7 +105,7 @@ void SimpleViewDrawingArea::label(vpz::BaseModel* src1, vpz::BaseModel* dst1)
       const std::string& src_dst(it->first);
     const std::string& src = src_dst.substr(0, src_dst.find('-'));
     const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
-    const std::string& text = it->second;
+    const std::string& text = it->second.text;
     if (src1->getName()==src&&dst1->getName()==dst)
     {
       mContext->get_text_extents(text, connection_label);
@@ -394,7 +394,7 @@ void SimpleViewDrawingArea::preComputeConnectInfo()
       for (jt = ports.begin(); jt != ports.end(); ++jt) {
         record.source = mCurrent;
         record.destination = jt->first;
-        record.description = mCurrent->getConnectionDescription(record.source->getName(),record.destination->getName());
+        record.description = mCurrent->getTextConnectionDescription(record.source->getName(),record.destination->getName());
         mConnectionInfo.push_back(record);
       }
     }
