@@ -43,7 +43,7 @@ DescriptionBox::DescriptionBox(vpz::CoupledModel* parent,
   
     m_entry = Gtk::manage(new Gtk::Entry());
       std::string label;
-    label=parent->vpz::CoupledModel::getConnectionDescription(src->getName(),dst->getName());
+    label=parent->vpz::CoupledModel::getTextConnectionDescription(src->getName(),dst->getName());
     if (label!="0")
     {
         m_entry->set_text(label);
@@ -99,7 +99,7 @@ void DescriptionBox::addDes(vpz::CoupledModel* parent,const std::string& src,
                                       const std::string& dst,
                                       const std::string& text)
 {
-    parent ->vpz::CoupledModel::addConnectionDescription(src,dst,text);
+    parent ->vpz::CoupledModel::addConnectionDescription(src,dst,text,"","","");
 }
 
 void DescriptionBox::assingComboOutputPort(vpz::CoupledModel* parent,

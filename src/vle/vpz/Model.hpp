@@ -457,10 +457,16 @@ namespace vle { namespace vpz {
 		 */
     	Description(const std::string& origin,
 					const std::string& destination,
-					const std::string& text) :
+					const std::string& text,
+					const std::string& x_offset,
+					const std::string& y_offset,
+					const std::string& font_size):
     	            origin(origin),
     	            destination(destination),
-    	            text(text)
+    	            text(text),
+    	            x_offset(x_offset),
+    	            y_offset(y_offset),
+    	            font_size(font_size)
     	        {}
 		/**
 		 * @brief Nothing to delete.
@@ -484,6 +490,10 @@ namespace vle { namespace vpz {
 		std::string origin;
 		std::string destination;
 		std::string text; //!< the description of the Out port.
+		std::string x_offset;
+		std::string y_offset;
+		std::string font_size;
+
 	};
 
 }} // namespace vle vpz
