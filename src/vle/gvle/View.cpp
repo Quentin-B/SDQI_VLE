@@ -471,7 +471,7 @@ void View::makeDescription(vpz::BaseModel* src, vpz::BaseModel* dst)
         a.getSelectedInputPort(srcPort);
         a.getSelectedOutputPort(dstPort);
         std::string text= mDescriptionBox->retext();
-        mCurrent ->addConnectionDescription(src->getName(),dst->getName(),text);
+        mCurrent ->addConnectionDescription(src->getName(),dst->getName(),text,"","","");
     }
     mGVLE->setModified(true);
 }

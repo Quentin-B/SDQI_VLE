@@ -42,9 +42,30 @@ namespace vle { namespace vpz {
     class VLE_API CoupledModel : public BaseModel
     {
     public:
+
         typedef std::vector < std::string > StringList;
         typedef std::map <std::string, ConnectionList> ModelConnections;
-        typedef std::map <std::string, std::string> DescriptionList;
+
+        //structure used in Description on simple view
+        struct ConnectionDescription
+                		{
+        					ConnectionDescription() : text(""), x_offset(""), y_offset(""), font_size("") {}
+                			ConnectionDescription( const std::string text,
+                					 const std::string x_offset,
+                					 const std::string y_offset,
+                					 const std::string font_size) :
+                					 text(text),
+                					 x_offset(x_offset),
+                					 y_offset(y_offset),
+                					 font_size(font_size)
+                					{ }
+
+                			std::string text;
+                			std::string x_offset;
+                			std::string y_offset;
+                			std::string font_size;
+                		};
+		typedef std::map <std::string, ConnectionDescription> DescriptionList;
 
         /**
          * @brief Constructor to intialize parent, position (0,0), size (0,0)
@@ -264,13 +285,27 @@ namespace vle { namespace vpz {
 
         void addConnectionDescription(const std::string& src,
                                  	  const std::string& dst,
-                                 	  const std::string& desc);
-        //Code by jew
-        std::string getConnectionDescription(const std::string& src,
+                                 	  const std::string& desc,
+                                 	  const std::string& x_offset,
+                                 	  const std::string& y_offset,
+                                 	  const std::string& font_size);
+
+        std::string getTextConnectionDescription(const std::string& src,
                                  const std::string& dst);
 
         DescriptionList getAllConnectionDescriptions();
         	
+        void setTextConnectionDescrition(const std::string& src,
+                                         const std::string& dst,
+                                         const std::string& text);
+
+        std::string getFontSizeConnectionDescription(const std::string& src,
+                                         const std::string& dst);
+
+		void setFontSizeConnectionDescrition(const std::string& src,
+										 const std::string& dst,
+										 const std::string& font_size);
+
         /**
          * @brief Delete all connection around model m.
          *

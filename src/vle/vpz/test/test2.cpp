@@ -118,12 +118,11 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
         "     <in><port name=\"in\"/></in>\n"
         "     <out><port name=\"out\"/></out>\n"
         "    </model>\n"
-        "    <model name=\"atom3\" type=\"atomic\""
-        "           observables=\"\" conditions=\"\" dynamics=\"\">\n"
-        "     <in><port name=\"in3\"/></in>\n"
-        "     <out><port name=\"out3\"/></out>\n"
-        "    </model>\n"
-
+		"    <model name=\"atom3\" type=\"atomic\""
+		"           observables=\"\" conditions=\"\" dynamics=\"\">\n"
+		"     <in><port name=\"in\"/></in>\n"
+		"     <out><port name=\"out\"/></out>\n"
+		"    </model>\n"
         "   </submodels>\n"
         "   <connections>\n"
         "    <connection type=\"internal\">\n"
@@ -134,15 +133,19 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
         "     <origin model=\"test2\" port=\"i\" />\n"
         "     <destination model=\"atom1\" port=\"in\" />\n"
         "    </connection>\n"
+		"	 <connection type=\"internal\">\n"
+		"     <origin model=\"atom2\" port=\"out\" />\n"
+		"     <destination model=\"atom3\" port=\"in\" />\n"
+		"    </connection>\n"
         "    <connection type=\"output\">"
         "     <origin model=\"atom2\" port=\"out\" />\n"
         "     <destination model=\"test2\" port=\"o\" />\n"
-        "    </connection>\n"	
+        "    </connection>\n"
+		"   <descriptions>\n"
+		"   	<description model1=\"atom1\" model2=\"atom2\" text=\"Hello World\" font_size=\"5\"/>\n"
+		"   	<description model1=\"atom2\" model2=\"atom3\" text=\"Hello World2\" font_size=\"7\"/>\n"
+		"   </descriptions>\n"
         "   </connections>\n"
-	"   <descriptions>\n"
-	"   	<description origin=\"atom1\" destination=\"atom2\" text=\"Test Desc 1\" />\n"
-	"   	<description origin=\"atom2\" destination=\"atom3\" text=\"Test Desc 2\" />\n"
-	"   </descriptions>\n"
         "  </model>\n"
         " </structures>\n"
         "</vle_project>\n";
@@ -176,8 +179,11 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
     BOOST_REQUIRE(cpl->existInputConnection("i", "atom1", "in"));
     BOOST_REQUIRE(cpl->existOutputConnection("atom2", "out", "o"));
     BOOST_REQUIRE(cpl->existInternalConnection("atom1", "out", "atom2", "in"));
-    BOOST_CHECK_EQUAL(cpl->getConnectionDescription("atom1","atom2"), "Test Desc 1");
-    BOOST_CHECK_EQUAL(cpl->getConnectionDescription("atom2","atom3"), "Test Desc 2");
+
+    std::cout << "description test: " << cpl->getTextConnectionDescription("atom1","atom2") << std::endl;
+    std::cout << "description test: " << cpl->getFontSizeConnectionDescription("atom1","atom2") << std::endl;
+    std::cout << "description test: " << cpl->getTextConnectionDescription("atom2","atom3") << std::endl;
+    std::cout << "description test: " << cpl->getFontSizeConnectionDescription("atom2","atom3") << std::endl;
 
 }
 

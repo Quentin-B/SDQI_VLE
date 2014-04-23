@@ -34,6 +34,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/cast.hpp>
 #include <cstring>
+#include <iostream>
 
 namespace vle { namespace vpz {
 
@@ -66,7 +67,9 @@ void SaxStackVpz::clear()
             parent()->isInputConnection() or
             parent()->isOutputConnection() or
             parent()->isOrigin() or
-            parent()->isDestination()) {
+            parent()->isDestination() or
+            parent()->isDescriptions() or
+            parent()->isDescription()) {
             delete parent();
         }
         pop();
@@ -461,33 +464,88 @@ void SaxStackVpz::pushDescriptions()
     push(descs);
 }
 
-void SaxStackVpz::pushDescription()
+void SaxStackVpz::pushDescription(const xmlChar** att)
 {
+
+    const xmlChar* origin = 0;
+    const xmlChar* destination = 0;
+    const xmlChar* text = 0;
+    const xmlChar* x_offset = 0;
+    const xmlChar* y_offset = 0;
+    const xmlChar* font_size = 0;
+
+    for (int i = 0; att[i] != 0; i += 2) {
+        if (xmlStrcmp(att[i], (const xmlChar*)"model1") == 0) {
+        	origin = att[i + 1];
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"model2") == 0) {
+        	destination = att[i + 1];
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"text") == 0) {
+        	text = att[i + 1];
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"x_offset") == 0) {
+        	x_offset = att[i + 1];
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"y_offset") == 0) {
+        	y_offset = att[i + 1];
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"font_size") == 0) {
+        	font_size = att[i + 1];
+        }
+    }
+
+    if (not origin or not destination) {
+        throw utils::SaxParserError(
+            _("Description tag does not have an attribute 'origin' or 'destination'"));
+    }
+
+    vpz::Base* desc = new vpz::Description((const char*)origin, (const char*)destination,
+    										text ? xmlCharToString(text) : "",
+											x_offset ? xmlCharToString(x_offset) : "",
+											y_offset ? xmlCharToString(y_offset) : "",
+											font_size ? xmlCharToString(font_size) : "");
+
+	push(desc);
 
 }
 
-void SaxStackVpz::buildDescription(const xmlChar** att)
+void SaxStackVpz::buildDescription()
 {
-	const xmlChar* origin = 0;
-	const xmlChar* destination = 0;
-	const xmlChar* text = 0;
 
-	for (int i = 0; att[i] != 0; i += 2) {
-		if (xmlStrcmp(att[i], (const xmlChar*)"origin") == 0) {
-			origin = att[i + 1];
-		} else if (xmlStrcmp(att[i], (const xmlChar*)"destination") == 0) {
-			destination = att[i + 1];
-		} else if (xmlStrcmp(att[i], (const xmlChar*)"text") == 0) {
-			text = att[i + 1];
-		}
+	 if (m_stack.empty()) {
+		throw utils::SaxParserError();
 	}
+
+	//pop Desc
+	if (not parent()->isDescription()) {
+				throw utils::SaxParserError();
+		}
+	vpz::Description* description = static_cast < vpz::Description* >(pop());
+
+	//pop descs
+	if (not parent()->isDescriptions()) {
+			throw utils::SaxParserError();
+	}
+	vpz::Base* descx = pop();
+
+	//pop connections
+	if (not parent()->isConnections()) {
+	        throw utils::SaxParserError();
+	}
+	vpz::Base* cntx = pop();
 
 	vpz::Model* model = static_cast < vpz::Model* >(parent());
 
-	vpz::CoupledModel* cpl = static_cast < vpz::CoupledModel*
-				>(model->model());
+	vpz::CoupledModel* cpl = static_cast < vpz::CoupledModel*>(model->model());
 
-	cpl->addConnectionDescription(xmlCharToString(origin),xmlCharToString(destination),xmlCharToString(text));
+	//create desc
+	cpl->addConnectionDescription(description->origin,description->destination,description->text,
+			description->x_offset,
+			description->y_offset,
+			description->font_size);
+
+	//push back connections
+	push(cntx);
+	//push back descriptions
+	push(descx);
+	delete description;
+
 }
 
 void SaxStackVpz::pushDynamics()

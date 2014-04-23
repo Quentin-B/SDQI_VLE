@@ -57,3 +57,5 @@ src/vle/vpz/test/test_vpz_project
 src/vle/vpz/test/test_vpz_translator
 src/vle/vpz/test/test_vpz_values
 version.hpp
+.project
+.cproject

@@ -539,7 +539,7 @@ void CoupledModel::delAllConnection(BaseModel* m)
         } else {
             jt->first->getOutPort(jt->second).remove(m, it->first);
         }
-            addConnectionDescription(jt->first->getName().c_str(),m->getName(),"");
+            addConnectionDescription(jt->first->getName().c_str(),m->getName(),"","","","");
     }
     ins.clear();
 }
@@ -553,7 +553,7 @@ for (ModelPortList::iterator jt = ins.begin(); jt != ins.end(); ++jt) {
     } else {
         jt->first->getInPort(jt->second).remove(m, it->first);
     }
-    addConnectionDescription(m->getName(),jt->first->getName().c_str(),"");  
+    addConnectionDescription(m->getName(),jt->first->getName().c_str(),"","","","");
 }
 ins.clear();
 }
@@ -917,20 +917,29 @@ void CoupledModel::writeDescriptions(std::ostream& out) const
 	out << "<descriptions>\n";
 	if(not m_descriptionList.empty())
 	{
-
 		for (DescriptionList::const_iterator it = m_descriptionList.begin();
 			 it != m_descriptionList.end(); ++it) {
 			const std::string& src_dst(it->first);
-			const std::string& src = src_dst.substr(0, src_dst.find('-'));
-			const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
-			const std::string& text = it->second;
+			const std::string& src = src_dst.substr(0,src_dst.find('-'));
+			const std::string& dst = src_dst.substr(src_dst.find('-')+1);
+			const std::string& text = it->second.text;
+			const std::string& x_offset = it->second.x_offset;
+			const std::string& y_offset = it->second.y_offset;
+			const std::string& font_size = it->second.font_size;
 
             std::string src_e = checkModelExistance(src);
             std::string dst_e = checkModelExistance(dst);
 
             if (text!=""&&src_e!="0"&&dst_e!="0")
             {
-                out << "<description origin=\""+ src + "\" destination=\""+ dst + "\" text=\""+ text + "\"/>\n";
+				out << "<description model1=\""+ src + "\" model2=\""+ dst + "\" text=\""+ text + "\"";
+				if(not x_offset.empty())
+					out << " x_offset=\""+ x_offset + "\"";
+				if(not y_offset.empty())
+					out << " y_offset=\""+ y_offset + "\"";
+				if(not font_size.empty())
+					out << " font_size=\""+ font_size + "\"";
+				out << "/>\n";
             }
 		}
 
@@ -1113,7 +1122,10 @@ const ModelPortList& CoupledModel::getInternalOutPort(
 }
 void CoupledModel::addConnectionDescription(const std::string& src,
                                  	  const std::string& dst,
-                                 	  const std::string& text)
+                                 	  const std::string& text,
+                                 	  const std::string& x_offset,
+                                 	  const std::string& y_offset,
+                                 	  const std::string& font_size)
 {
 	if (not exist(src)) {
 	        throw utils::DevsGraphError(
@@ -1125,18 +1137,35 @@ void CoupledModel::addConnectionDescription(const std::string& src,
 			_("Cannot add description with unknown destination"));
 	}
 
-	m_descriptionList[src+"-"+dst] = text;
+	m_descriptionList[src+"-"+dst] = ConnectionDescription(text,x_offset,y_offset,font_size);
 }
-std::string CoupledModel::getConnectionDescription(const std::string& src,
+
+std::string CoupledModel::getTextConnectionDescription(const std::string& src,
                                  const std::string& dst)
 {
     DescriptionList::const_iterator it = m_descriptionList.find(src+"-"+dst);
-    return (it == m_descriptionList.end()) ? "0" : it->second;
+    return (it == m_descriptionList.end()) ? "0" : it->second.text;
 }
 
 CoupledModel::DescriptionList CoupledModel::getAllConnectionDescriptions()
 {
     return m_descriptionList;
+}
+void CoupledModel::setTextConnectionDescrition(const std::string& src,
+                                 const std::string& dst, const std::string& text)
+{
+	m_descriptionList.find(src+"-"+dst)->second.text = text;
+}
+
+std::string CoupledModel::getFontSizeConnectionDescription(const std::string& src,
+                                 const std::string& dst)
+{
+	return m_descriptionList.find(src+"-"+dst)->second.font_size;
+}
+void CoupledModel::setFontSizeConnectionDescrition(const std::string& src,
+                                 const std::string& dst, const std::string& font_size)
+{
+	m_descriptionList.find(src+"-"+dst)->second.font_size = font_size;
 }
 
 void CoupledModel::copyInternalConnection(const ConnectionList& src,
