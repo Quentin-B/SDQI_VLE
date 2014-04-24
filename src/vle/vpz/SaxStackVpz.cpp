@@ -470,9 +470,6 @@ void SaxStackVpz::pushDescription(const xmlChar** att)
     const xmlChar* origin = 0;
     const xmlChar* destination = 0;
     const xmlChar* text = 0;
-    const xmlChar* x_offset = 0;
-    const xmlChar* y_offset = 0;
-    const xmlChar* font_size = 0;
 
     for (int i = 0; att[i] != 0; i += 2) {
         if (xmlStrcmp(att[i], (const xmlChar*)"model1") == 0) {
@@ -481,12 +478,6 @@ void SaxStackVpz::pushDescription(const xmlChar** att)
         	destination = att[i + 1];
         } else if (xmlStrcmp(att[i], (const xmlChar*)"text") == 0) {
         	text = att[i + 1];
-        } else if (xmlStrcmp(att[i], (const xmlChar*)"x_offset") == 0) {
-        	x_offset = att[i + 1];
-        } else if (xmlStrcmp(att[i], (const xmlChar*)"y_offset") == 0) {
-        	y_offset = att[i + 1];
-        } else if (xmlStrcmp(att[i], (const xmlChar*)"font_size") == 0) {
-        	font_size = att[i + 1];
         }
     }
 
@@ -496,10 +487,7 @@ void SaxStackVpz::pushDescription(const xmlChar** att)
     }
 
     vpz::Base* desc = new vpz::Description((const char*)origin, (const char*)destination,
-    										text ? xmlCharToString(text) : "",
-											x_offset ? xmlCharToString(x_offset) : "",
-											y_offset ? xmlCharToString(y_offset) : "",
-											font_size ? xmlCharToString(font_size) : "");
+    										text ? xmlCharToString(text) : "");
 
 	push(desc);
 
@@ -535,10 +523,7 @@ void SaxStackVpz::buildDescription()
 	vpz::CoupledModel* cpl = static_cast < vpz::CoupledModel*>(model->model());
 
 	//create desc
-	cpl->addConnectionDescription(description->origin,description->destination,description->text,
-			description->x_offset,
-			description->y_offset,
-			description->font_size);
+	cpl->addConnectionDescription(description->origin,description->destination,description->text);
 
 	//push back connections
 	push(cntx);

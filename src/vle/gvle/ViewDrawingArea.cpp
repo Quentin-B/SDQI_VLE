@@ -841,7 +841,7 @@ void ViewDrawingArea::delConnection()
             mCurrent->delOutputConnection(src, portsrc, portdst);
         } else {
            mCurrent->delInternalConnection(src, portsrc, dst, portdst);
-           mCurrent->vpz::CoupledModel::addConnectionDescription(src->getName(),dst->getName(),"","","","");
+           mCurrent->vpz::CoupledModel::addConnectionDescription(src->getName(),dst->getName(),"");
         }
     }
     mHighlightLine = -1;

@@ -142,8 +142,8 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
         "     <destination model=\"test2\" port=\"o\" />\n"
         "    </connection>\n"
 		"   <descriptions>\n"
-		"   	<description model1=\"atom1\" model2=\"atom2\" text=\"Hello World\" font_size=\"5\"/>\n"
-		"   	<description model1=\"atom2\" model2=\"atom3\" text=\"Hello World2\" font_size=\"7\"/>\n"
+		"   	<description model1=\"atom1\" model2=\"atom2\" text=\"Hello World\" />\n"
+		"   	<description model1=\"atom2\" model2=\"atom3\" text=\"Hello World2\" />\n"
 		"   </descriptions>\n"
         "   </connections>\n"
         "  </model>\n"
@@ -180,10 +180,8 @@ BOOST_AUTO_TEST_CASE(coupledmodel_vpz)
     BOOST_REQUIRE(cpl->existOutputConnection("atom2", "out", "o"));
     BOOST_REQUIRE(cpl->existInternalConnection("atom1", "out", "atom2", "in"));
 
-    std::cout << "description test: " << cpl->getTextConnectionDescription("atom1","atom2") << std::endl;
-    std::cout << "description test: " << cpl->getFontSizeConnectionDescription("atom1","atom2") << std::endl;
-    std::cout << "description test: " << cpl->getTextConnectionDescription("atom2","atom3") << std::endl;
-    std::cout << "description test: " << cpl->getFontSizeConnectionDescription("atom2","atom3") << std::endl;
+    std::cout << "description test: " << cpl->getConnectionDescription("atom1","atom2") << std::endl;
+    std::cout << "description test: " << cpl->getConnectionDescription("atom2","atom3") << std::endl;
 
 }
 

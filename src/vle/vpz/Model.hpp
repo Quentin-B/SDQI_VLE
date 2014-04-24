@@ -457,16 +457,10 @@ namespace vle { namespace vpz {
 		 */
     	Description(const std::string& origin,
 					const std::string& destination,
-					const std::string& text,
-					const std::string& x_offset,
-					const std::string& y_offset,
-					const std::string& font_size):
+					const std::string& text):
     	            origin(origin),
     	            destination(destination),
-    	            text(text),
-    	            x_offset(x_offset),
-    	            y_offset(y_offset),
-    	            font_size(font_size)
+    	            text(text)
     	        {}
 		/**
 		 * @brief Nothing to delete.
