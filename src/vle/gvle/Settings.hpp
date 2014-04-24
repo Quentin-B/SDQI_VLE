@@ -152,9 +152,41 @@ public:
 
     const std::string& getFont() const;
 
+    void setFontStyle(const std::string& fontStyle);
+
+    const std::string& getFontStyle() const;
+
+    void setFontItalic(const std::string& fontItalic);
+
+    const std::string& getFontItalic() const;
+
+    void setFontBold(const std::string& fontBold);
+
+    const std::string& getFontBold() const;
+
     void setFontSize(const double size);
 
     double getFontSize() const;
+
+    void setDescriptionFont(const std::string& font);
+
+    const std::string& getDescriptionFont() const;
+
+    void setDescriptionFontStyle(const std::string& fontStyle);
+
+	const std::string& getDescriptionFontStyle() const;
+
+	void setDescriptionFontItalic(const std::string& fontItalic);
+
+	const std::string& getDescriptionFontItalic() const;
+
+	void setDescriptionFontBold(const std::string& fontBold);
+
+	const std::string& getDescriptionFontBold() const;
+
+    void setDescriptionFontSize(const double size);
+
+    double getDescriptionFontSize() const;
 
     void setLineWidth(double width);
 

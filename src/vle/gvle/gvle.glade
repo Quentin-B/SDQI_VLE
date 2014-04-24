@@ -3994,6 +3994,7 @@ into your project.
                 <property name="position">2</property>
               </packing>
             </child>
+	 
           </object>
           <packing>
             <property name="expand">False</property>
@@ -4059,6 +4060,35 @@ into your project.
                           <packing>
                             <property name="top_attach">12</property>
                             <property name="bottom_attach">13</property>
+                          </packing>
+                        </child>
+			 <child>
+                          <object class="GtkLabel" id="LabelDescriptionPreferencesSelectFont">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">Description Font</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">13</property>
+                            <property name="bottom_attach">14</property>
+                          </packing>
+                        </child>
+			 <child>
+                          <object class="GtkFontButton" id="ButtonDescriptionPreferencesSelectFont">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="title" translatable="yes">Select a font</property>
+                            <property name="show_style">False</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">13</property>
+                            <property name="bottom_attach">14</property>
+                            <property name="y_options">GTK_EXPAND</property>
                           </packing>
                         </child>
                         <child>
