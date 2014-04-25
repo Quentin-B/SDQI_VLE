@@ -108,33 +108,31 @@ void SimpleViewDrawingArea::label(vpz::BaseModel* src1, vpz::BaseModel* dst1)
     const std::string& text = it->second;
     if (src1->getName()==src&&dst1->getName()==dst)
     {
+      if (Settings::settings().getDescriptionFontItalic()=="Italic"&&Settings::settings().getDescriptionFontBold()=="Bold")
+      {
+        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_OBLIQUE, Cairo::FONT_WEIGHT_BOLD);
+      }
+      else if (Settings::settings().getDescriptionFontItalic()=="Italic"&&Settings::settings().getDescriptionFontBold()=="")
+      {
+        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_OBLIQUE, Cairo::FONT_WEIGHT_NORMAL);
+      }
+      else if (Settings::settings().getDescriptionFontItalic()==""&&Settings::settings().getDescriptionFontBold()=="Bold")
+      {
+        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+      }
+      else
+      {
+        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
+      }
+      
+      int size=Settings::settings().getDescriptionFontSize();
+
+      mContext->set_font_size(size);
+      mContext->set_source_rgb (255, 0, 0);
       mContext->get_text_extents(text, connection_label);
-
-      mContext->move_to(((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2))+1,
-        ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
-      mContext->select_font_face(Settings::settings().getFont(),
-       Cairo::FONT_SLANT_OBLIQUE,
-       Cairo::FONT_WEIGHT_NORMAL);    
-      mContext->set_font_size(10);
-      mContext->set_source_rgb (255, 255, 255);
-      mContext->show_text(text);
-
-      mContext->move_to(((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2))-1,
-        ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
-      mContext->select_font_face(Settings::settings().getFont(),
-       Cairo::FONT_SLANT_OBLIQUE,
-       Cairo::FONT_WEIGHT_NORMAL);    
-      mContext->set_font_size(10);
-      mContext->set_source_rgb (255, 255, 255);
-      mContext->show_text(text);
 
       mContext->move_to((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2),
         ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
-      mContext->select_font_face(Settings::settings().getFont(),
-       Cairo::FONT_SLANT_OBLIQUE,
-       Cairo::FONT_WEIGHT_NORMAL);    
-      mContext->set_font_size(10);
-      mContext->set_source_rgb (255, 0, 0);
       mContext->show_text(text);
     }
   }

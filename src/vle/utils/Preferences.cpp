@@ -65,7 +65,6 @@
 #endif
 
 namespace po = boost::program_options;
-
 namespace vle { namespace utils {
 
 class Preferences::Pimpl
@@ -117,6 +116,7 @@ public:
              _("Smart Home end"));
 
         mGvleGraphicsOptions.add_options()
+
             ("gvle.graphics.background-color", po::value < std::string >
              (NULL)->default_value("#ffffffffffff"))
             ("gvle.graphics.foreground-color", po::value < std::string >
@@ -140,19 +140,26 @@ public:
             ("gvle.graphics.font-italic", po::value < std::string >
              (NULL)->default_value(""))
             ("gvle.graphics.description-font", po::value < std::string >
-			 (NULL)->default_value("Monospace 10"))
-			("gvle.graphics.descriptionFont", po::value < std::string >
+(NULL)->default_value("Monospace 10"))
+
+("gvle.graphics.connection-font", po::value < std::string >
+(NULL)->default_value("Monospace 10"))
+("gvle.graphics.connection-font-size", po::value < double >
+(NULL)->default_value(10))
+
+
+("gvle.graphics.descriptionFont", po::value < std::string >
              (NULL)->default_value("Monospace 10"))
-			("gvle.graphics.description-font-size", po::value < double >
-			 (NULL)->default_value(10.0))
-			 ("gvle.graphics.descriptionFont-size", po::value < double >
-			 (NULL)->default_value(10.0))
-			("gvle.graphics.description-font-style", po::value < std::string >
-			 (NULL)->default_value("Monospace"))
-			("gvle.graphics.description-font-bold", po::value < std::string >
-			 (NULL)->default_value(""))
-			("gvle.graphics.description-font-italic", po::value < std::string >
-			 (NULL)->default_value(""))
+("gvle.graphics.description-font-size", po::value < double >
+(NULL)->default_value(10.0))
+("gvle.graphics.descriptionFont-size", po::value < double >
+(NULL)->default_value(10.0))
+("gvle.graphics.description-font-style", po::value < std::string >
+(NULL)->default_value("Monospace"))
+("gvle.graphics.description-font-bold", po::value < std::string >
+(NULL)->default_value(""))
+("gvle.graphics.description-font-italic", po::value < std::string >
+(NULL)->default_value(""))
             ("gvle.graphics.line-width", po::value < double >
              (NULL)->default_value(3.0));
 

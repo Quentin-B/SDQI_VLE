@@ -34,7 +34,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/cast.hpp>
 #include <cstring>
-#include <iostream>
 
 namespace vle { namespace vpz {
 
@@ -67,9 +66,7 @@ void SaxStackVpz::clear()
             parent()->isInputConnection() or
             parent()->isOutputConnection() or
             parent()->isOrigin() or
-            parent()->isDestination() or
-            parent()->isDescriptions() or
-            parent()->isDescription()) {
+            parent()->isDestination()) {
             delete parent();
         }
         pop();
@@ -466,15 +463,18 @@ void SaxStackVpz::pushDescriptions()
 
 void SaxStackVpz::pushDescription(const xmlChar** att)
 {
+    if (m_stack.empty() or not parent()->isDescriptions()) {
+        throw utils::SaxParserError();
+    }
 
     const xmlChar* origin = 0;
     const xmlChar* destination = 0;
     const xmlChar* text = 0;
 
     for (int i = 0; att[i] != 0; i += 2) {
-        if (xmlStrcmp(att[i], (const xmlChar*)"model1") == 0) {
+        if (xmlStrcmp(att[i], (const xmlChar*)"origin") == 0) {
         	origin = att[i + 1];
-        } else if (xmlStrcmp(att[i], (const xmlChar*)"model2") == 0) {
+        } else if (xmlStrcmp(att[i], (const xmlChar*)"destination") == 0) {
         	destination = att[i + 1];
         } else if (xmlStrcmp(att[i], (const xmlChar*)"text") == 0) {
         	text = att[i + 1];
@@ -488,49 +488,44 @@ void SaxStackVpz::pushDescription(const xmlChar** att)
 
     vpz::Base* desc = new vpz::Description((const char*)origin, (const char*)destination,
     										text ? xmlCharToString(text) : "");
-
 	push(desc);
-
 }
 
 void SaxStackVpz::buildDescription()
 {
-
-	 if (m_stack.empty()) {
-		throw utils::SaxParserError();
-	}
-
 	//pop Desc
 	if (not parent()->isDescription()) {
 				throw utils::SaxParserError();
 		}
 	vpz::Description* description = static_cast < vpz::Description* >(pop());
-
 	//pop descs
 	if (not parent()->isDescriptions()) {
 			throw utils::SaxParserError();
 	}
 	vpz::Base* descx = pop();
-
 	//pop connections
 	if (not parent()->isConnections()) {
 	        throw utils::SaxParserError();
 	}
 	vpz::Base* cntx = pop();
 
+	if (not parent()->isModel()) {
+		throw utils::SaxParserError();
+	}
 	vpz::Model* model = static_cast < vpz::Model* >(parent());
 
-	vpz::CoupledModel* cpl = static_cast < vpz::CoupledModel*>(model->model());
-
+	vpz::CoupledModel* cpl = static_cast < vpz::CoupledModel*
+		>(model->model());
 	//create desc
+	//To do....
 	cpl->addConnectionDescription(description->origin,description->destination,description->text);
+
+
 
 	//push back connections
 	push(cntx);
-	//push back descriptions
-	push(descx);
-	delete description;
-
+        //push back descriptions
+    push(descx);
 }
 
 void SaxStackVpz::pushDynamics()

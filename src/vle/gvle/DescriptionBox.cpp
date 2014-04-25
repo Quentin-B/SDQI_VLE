@@ -1,6 +1,3 @@
-
-
-
 #include <vle/gvle/DescriptionBox.hpp>
 #include <vle/vpz/CoupledModel.hpp>
 #include <vle/utils/i18n.hpp>

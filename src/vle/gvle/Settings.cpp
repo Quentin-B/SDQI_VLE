@@ -66,17 +66,17 @@ public:
         mSelectedColor.set("#ffff00000000");
         mConnectionColor.set("#000000000000");
 
-        mFont = "Arial 10";
+        mFont = "Sans 10";
         mFontSize = 10.0;
-        mFontStyle = "Arial";
+        mFontStyle = "Sans";
         mFontItalic = "";
-        mFontBold  = "";
+        mFontBold = "";
 
-        mDescriptionFont = "Arial";
-        mDescriptionFontSize = 10.0;
-        mDescriptionFontStyle = "Arial";
+        mDescriptionFont = "Sans 10";
+        mDescriptionFontSize = 10;
+        mDescriptionFontStyle = "Sans";
         mDescriptionFontItalic = "";
-        mDescriptionFontBold  = "";
+        mDescriptionFontBold = "";
 
         mLineWidth = 2.0;
     }
@@ -144,18 +144,18 @@ public:
         }
 
         if (prefs.get("gvle.graphics.font-style", &s) and not s.empty()) {
-			mFontStyle = s;
-			s.clear();
+mFontStyle = s;
+s.clear();
         }
 
         if (prefs.get("gvle.graphics.font-italic", &s) and not s.empty()) {
-			mFontItalic = s;
-			s.clear();
+mFontItalic = s;
+s.clear();
         }
 
         if (prefs.get("gvle.graphics.font-bold", &s) and not s.empty()) {
-			mFontBold = s;
-			s.clear();
+mFontBold = s;
+s.clear();
         }
 
         if (prefs.get("gvle.graphics.font-size", &d) and d > 0.0) {
@@ -164,29 +164,29 @@ public:
         }
 
         if (prefs.get("gvle.graphics.description-font", &s) and not s.empty()) {
-		   mDescriptionFont = s;
-		   s.clear();
-	    }
+mDescriptionFont = s;
+s.clear();
+}
 
         if (prefs.get("gvle.graphics.description-font-style", &s) and not s.empty()) {
-		   mDescriptionFontStyle = s;
-		   s.clear();
-       	}
+mDescriptionFontStyle = s;
+s.clear();
+        }
 
         if (prefs.get("gvle.graphics.description-font-italic", &s) and not s.empty()) {
-		   mDescriptionFontItalic = s;
-		   s.clear();
-       	}
+mDescriptionFontItalic = s;
+s.clear();
+        }
 
         if (prefs.get("gvle.graphics.description-font-bold", &s) and not s.empty()) {
-		   mDescriptionFontBold = s;
-		   s.clear();
-       	}
+mDescriptionFontBold = s;
+s.clear();
+        }
 
-	    if (prefs.get("gvle.graphics.description-font-size", &d) and d > 0.0) {
-		   mDescriptionFontSize = d;
-		   d = 0.0;
-	   }
+if (prefs.get("gvle.graphics.description-font-size", &d) and d > 0) {
+mDescriptionFontSize = d;
+d = 0;
+}
 
         if (prefs.get("gvle.graphics.line-width", &d) and d > 0.0) {
             mLineWidth = d;
@@ -219,8 +219,8 @@ public:
         prefs.set("gvle.graphics.connection-color", convert(mConnectionColor));
 
         /*
-         * Added a sub setting for font style, italic and bold
-         */
+* Added a sub setting for font style, italic and bold
+*/
 
         prefs.set("gvle.graphics.font", mFont);
         prefs.set("gvle.graphics.font-size", mFontSize);
@@ -229,8 +229,8 @@ public:
         prefs.set("gvle.graphics.font-bold", mFontBold);
 
         /*
-         * Added description for settings
-         */
+* Added description for settings
+*/
 
         prefs.set("gvle.graphics.description-font", mDescriptionFont);
         prefs.set("gvle.graphics.description-font-size", mDescriptionFontSize);
@@ -259,20 +259,18 @@ public:
     Gdk::Color mCoupledColor;
     Gdk::Color mSelectedColor;
     Gdk::Color mConnectionColor;
-
     std::string mFont;
     std::string mFontStyle;
     std::string mFontItalic;
     std::string mFontBold;
     double mFontSize;
+    double mLineWidth;
 
     std::string mDescriptionFont;
     std::string mDescriptionFontStyle;
     std::string mDescriptionFontItalic;
     std::string mDescriptionFontBold;
     double mDescriptionFontSize;
-
-    double mLineWidth;
 
     static std::string convert(const Gdk::Color& color)
     {
@@ -545,7 +543,7 @@ void Settings::setFontItalic(const std::string& fontItalic)
     settings().mPimpl->mFontItalic = fontItalic;
 }
 
-const std::string&  Settings::getFontItalic() const
+const std::string& Settings::getFontItalic() const
 {
     return settings().mPimpl->mFontItalic;
 }
@@ -555,7 +553,7 @@ void Settings::setFontBold(const std::string& fontBold)
     settings().mPimpl->mFontBold = fontBold;
 }
 
-const std::string&  Settings::getFontBold() const
+const std::string& Settings::getFontBold() const
 {
     return settings().mPimpl->mFontBold;
 }
@@ -565,7 +563,7 @@ void Settings::setDescriptionFont(const std::string& font)
     settings().mPimpl->mDescriptionFont = font;
 }
 
-const std::string& Settings::getDescriptionFont() const
+const std::string& Settings::getDescriptionFont() 
 {
     return settings().mPimpl->mDescriptionFont;
 }
@@ -580,12 +578,12 @@ const std::string& Settings::getDescriptionFontStyle() const
     return settings().mPimpl->mDescriptionFontStyle;
 }
 
-void Settings::setDescriptionFontSize(const double size)
+void Settings::setDescriptionFontSize(const int size)
 {
     settings().mPimpl->mDescriptionFontSize = size;
 }
 
-double Settings::getDescriptionFontSize() const
+int Settings::getDescriptionFontSize() const
 {
     return settings().mPimpl->mDescriptionFontSize;
 }
@@ -595,7 +593,7 @@ void Settings::setDescriptionFontItalic(const std::string& fontItalic)
     settings().mPimpl->mDescriptionFontItalic = fontItalic;
 }
 
-const std::string&  Settings::getDescriptionFontItalic() const
+const std::string& Settings::getDescriptionFontItalic() const
 {
     return settings().mPimpl->mDescriptionFontItalic;
 }

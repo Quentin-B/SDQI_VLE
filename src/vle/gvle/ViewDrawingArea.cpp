@@ -1030,7 +1030,7 @@ void ViewDrawingArea::drawConnection()
     preComputeConnectInfo();
     computeConnection();
     drawLines();
-    computeConnection();
+    //computeConnection();
 }
 
 void ViewDrawingArea::maxModelWidthHeight()

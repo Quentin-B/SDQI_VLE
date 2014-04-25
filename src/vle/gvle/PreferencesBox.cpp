@@ -35,7 +35,6 @@
 #include <gtkmm/spinbutton.h>
 #include <gtkmm/scale.h>
 
-
 #define MIN_LINE_WIDTH 1
 #define MAX_LINE_WIDTH 10
 
@@ -144,64 +143,64 @@ public:
     {
         Settings::settings().setBackgroundColor(mBackgroundColor->get_color());
         Settings::settings().setForegroundColor(mForegroundColor->get_color());
-        Settings::settings().setAtomicColor(mAtomicColor->get_color());
+      //  Settings::settings().setAtomicColor(mAtomicColor->get_color());
 
         /*@TODO
-         * Commented out as makes the preference unusable. It causes an segmentation
-         * error
-         */
+* Commented out as makes the preference unusable. It causes an segmentation
+* error
+*/
 
-  //    Settings::settings().setCoupledColor(mCoupledColor->get_color());
+   //Settings::settings().setCoupledColor(mCoupledColor->get_color());
 
         Settings::settings().setSelectedColor(mSelectedColor->get_color());
         Settings::settings().setConnectionColor(mConnectionColor->get_color());
 
         /*
-         * Main Label font
-         */
+* Main Label font
+*/
         Settings::settings().setFont(mFont->get_font_name());
 
         /* we have to extract the Font Style, Size and Face from the get_font_name
-         */
+*/
          std::string fontBold = "";
          std::string fontItalic = "";
          unsigned pos = mFont->get_font_name().find_last_of(" ");
-         std::string str_fontSize =  mFont->get_font_name().substr (pos+1,
-        		 	 	 	 mFont->get_font_name().length() -pos );
+         std::string str_fontSize = mFont->get_font_name().substr (pos+1,
+         mFont->get_font_name().length() -pos );
          double fontSize = atof(str_fontSize.c_str());
          std::string fontStyle = mFont->get_font_name().substr(0, pos);
 
         /*@TODO
-         * extract Bold and Italic
-         */
+* extract Bold and Italic
+*/
         Settings::settings().setFontStyle(fontStyle);
         Settings::settings().setFontItalic("");
         Settings::settings().setFontBold("");
         Settings::settings().setFontSize(fontSize);
 
         /*
-         * Description Font
-         */
+* Description Font
+*/
         Settings::settings().setDescriptionFont(mDescriptionFont->get_font_name());
 
         fontBold = "";
         fontItalic = "";
         pos = mDescriptionFont->get_font_name().find_last_of(" ");
         str_fontSize = mDescriptionFont->get_font_name().substr (pos+1,
-					   mDescriptionFont->get_font_name().length() -pos );
-		fontSize = atof(str_fontSize.c_str());
-		fontStyle = mDescriptionFont->get_font_name().substr(0, pos);
+mDescriptionFont->get_font_name().length() -pos );
+fontSize = atof(str_fontSize.c_str());
+fontStyle = mDescriptionFont->get_font_name().substr(0, pos);
 
 
-		if (fontStyle.find("Italic") < fontStyle.length()){
-			fontItalic = "Italic";
-			fontStyle = fontStyle.substr(0, fontStyle.find("Italic") - 1);
-		}
+if (fontStyle.find("Italic") < fontStyle.length()){
+fontItalic = "Italic";
+fontStyle = fontStyle.substr(0, fontStyle.find("Italic") - 1);
+}
 
-		if (fontStyle.find("Bold") < fontStyle.length()){
-			fontBold = "Bold";
-			fontStyle = fontStyle.substr(0, fontStyle.find("Bold") - 1);
-		}
+if (fontStyle.find("Bold") < fontStyle.length()){
+fontBold = "Bold";
+fontStyle = fontStyle.substr(0, fontStyle.find("Bold") - 1);
+}
 
         Settings::settings().setDescriptionFontStyle(fontStyle);
         Settings::settings().setDescriptionFontSize(fontSize);
@@ -270,9 +269,9 @@ public:
     Gtk::ColorButton* mCoupledColor;
     Gtk::ColorButton* mSelectedColor;
     Gtk::ColorButton* mConnectionColor;
-    Gtk::FontButton*  mFont;
-    Gtk::FontButton*  mDescriptionFont;
-    Gtk::HScale*      mLineWidth;
+    Gtk::FontButton* mFont;
+    Gtk::FontButton* mDescriptionFont;
+    Gtk::HScale* mLineWidth;
 
     //Dialog widgets - Editor
     Gtk::CheckButton* mHighlightSyntax;
