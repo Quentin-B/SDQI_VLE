@@ -520,8 +520,6 @@ void SaxStackVpz::buildDescription()
 	//To do....
 	cpl->addConnectionDescription(description->origin,description->destination,description->text);
 
-
-
 	//push back connections
 	push(cntx);
         //push back descriptions

@@ -32,7 +32,7 @@
 #include <gdkmm/color.h>
 #include <string>
 
-namespace vle { namespace gvle {
+ namespace vle { namespace gvle {
 
 /**
  * @brief vle::gvle::Settings is a singleton class to store all the variable
@@ -46,153 +46,153 @@ namespace vle { namespace gvle {
  * assert(font, "Monospace 10");
  * @endcode
  */
-class GVLE_API Settings
-{
-public:
+ class GVLE_API Settings
+ {
+ public:
     /**
      * @brief Access to the only instance of the Settings class.
      *
      * @return The only instance of Settings.
      */
-    static Settings& settings();
+     static Settings& settings();
 
     /**
      * @brief Delete the only instance of the Settings class.
      */
-    static void kill();
+     static void kill();
 
     /**
      * @brief Assign a default value for all the variables of this class.
      */
-    void setDefault();
+     void setDefault();
 
     /**
      * @brief Use the vle::utils::Preferences class to load the `vle.conf' file
      * and assign all variables of this class.
      */
-    void load();
+     void load();
 
     /**
      * @brief use the vle::utils::Preferences class to store all variables of
      * this class into the `vle.conf' file.
      */
-    void save();
+     void save();
 
     // get/set functions.
 
-    void setAutoBuild(bool auto_build);
+     void setAutoBuild(bool auto_build);
 
-    bool getAutoBuild()
-;
-    void setHighlightSyntax(bool syntax);
+     bool getAutoBuild()
+     ;
+     void setHighlightSyntax(bool syntax);
 
-    bool getHighlightSyntax();
+     bool getHighlightSyntax();
 
-    void setHighlightBrackets(bool brackets);
+     void setHighlightBrackets(bool brackets);
 
-    bool getHighlightBrackets();
+     bool getHighlightBrackets();
 
-    void setHighlightLine(bool line);
+     void setHighlightLine(bool line);
 
-    bool getHighlightLine();
+     bool getHighlightLine();
 
-    void setLineNumbers(bool numbers);
+     void setLineNumbers(bool numbers);
 
-    bool getLineNumbers();
+     bool getLineNumbers();
 
-    void setRightMargin(bool margin);
+     void setRightMargin(bool margin);
 
-    bool getRightMargin();
+     bool getRightMargin();
 
-    void setAutoIndent(bool auto_indent);
+     void setAutoIndent(bool auto_indent);
 
-    bool getAutoIndent();
+     bool getAutoIndent();
 
-    void setIndentOnTab(bool indent_tab);
+     void setIndentOnTab(bool indent_tab);
 
-    bool getIndentOnTab();
+     bool getIndentOnTab();
 
-    void setIndentSize(int size);
+     void setIndentSize(int size);
 
-    int getIndentSize();
+     int getIndentSize();
 
-    void setSmartHomeEnd(bool smart);
+     void setSmartHomeEnd(bool smart);
 
-    bool getSmartHomeEnd();
+     bool getSmartHomeEnd();
 
-    void setFontEditor(const std::string& font);
+     void setFontEditor(const std::string& font);
 
-    const std::string& getFontEditor();
+     const std::string& getFontEditor();
 
-    void setForegroundColor(const Gdk::Color& color);
+     void setForegroundColor(const Gdk::Color& color);
 
-    const Gdk::Color& getForegroundColor() const;
+     const Gdk::Color& getForegroundColor() const;
 
-    void setBackgroundColor(const Gdk::Color& color);
+     void setBackgroundColor(const Gdk::Color& color);
 
-    const Gdk::Color& getBackgroundColor() const;
+     const Gdk::Color& getBackgroundColor() const;
 
-    void setSelectedColor(const Gdk::Color& color);
+     void setSelectedColor(const Gdk::Color& color);
 
-    const Gdk::Color& getSelectedColor() const;
+     const Gdk::Color& getSelectedColor() const;
 
-    void setCoupledColor(const Gdk::Color& color);
+     void setCoupledColor(const Gdk::Color& color);
 
-    const Gdk::Color& getCoupledColor() const;
+     const Gdk::Color& getCoupledColor() const;
 
-    void setAtomicColor(const Gdk::Color& color);
+     void setAtomicColor(const Gdk::Color& color);
 
-    const Gdk::Color& getAtomicColor() const;
+     const Gdk::Color& getAtomicColor() const;
 
-    void setConnectionColor(const Gdk::Color& color);
+     void setConnectionColor(const Gdk::Color& color);
 
-    const Gdk::Color& getConnectionColor() const;
+     const Gdk::Color& getConnectionColor() const;
 
-    void setFont(const std::string& font);
+     void setFont(const std::string& font);
 
-    const std::string& getFont() const;
+     const std::string& getFont() const;
 
-    void setFontStyle(const std::string& fontStyle);
+     void setFontStyle(const std::string& fontStyle);
 
-    const std::string& getFontStyle() const;
+     const std::string& getFontStyle() const;
 
-    void setFontItalic(const std::string& fontItalic);
+     void setFontItalic(const std::string& fontItalic);
 
-    const std::string& getFontItalic() const;
+     const std::string& getFontItalic() const;
 
-    void setFontBold(const std::string& fontBold);
+     void setFontBold(const std::string& fontBold);
 
-    const std::string& getFontBold() const;
+     const std::string& getFontBold() const;
 
-    void setFontSize(const double size);
+     void setFontSize(const double size);
 
-    double getFontSize() const;
+     double getFontSize() const;
 
-    void setDescriptionFont(const std::string& font);
+     void setDescriptionFont(const std::string& font);
 
-    const std::string& getDescriptionFont() ;
+     const std::string& getDescriptionFont() const;
 
-    void setDescriptionFontStyle(const std::string& fontStyle);
+     void setDescriptionFontStyle(const std::string& fontStyle);
 
-const std::string& getDescriptionFontStyle() const;
+     const std::string& getDescriptionFontStyle() const;
 
-void setDescriptionFontItalic(const std::string& fontItalic);
+     void setDescriptionFontItalic(const std::string& fontItalic);
 
-const std::string& getDescriptionFontItalic() const;
+     const std::string& getDescriptionFontItalic() const;
 
-void setDescriptionFontBold(const std::string& fontBold);
+     void setDescriptionFontBold(const std::string& fontBold);
 
-const std::string& getDescriptionFontBold() const;
+     const std::string& getDescriptionFontBold() const;
 
-    void setDescriptionFontSize(const int size);
+     void setDescriptionFontSize(const int size);
 
-    int getDescriptionFontSize() const;
+     int getDescriptionFontSize() const;
 
-    void setLineWidth(double width);
+     void setLineWidth(double width);
 
-    double getLineWidth() const;
+     double getLineWidth() const;
 
-private:
+ private:
     Settings();
     ~Settings();
     Settings(const Settings& other);

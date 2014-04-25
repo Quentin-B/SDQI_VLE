@@ -54,6 +54,7 @@
      drawConnection();
      drawChildrenModels();
      drawLink();
+     writeLabel();
      drawZoomFrame();
      drawHighlightConnection();
      set_size_request(mRectWidth * mZoom, mRectHeight * mZoom);
@@ -71,7 +72,6 @@
     MODEL_RADIUS,
     0.0,
     2.0 * M_PI);
-
 
   mContext->stroke();
 
@@ -92,61 +92,77 @@
   }
 }
 
-void SimpleViewDrawingArea::label(vpz::BaseModel* src1, vpz::BaseModel* dst1)
+void SimpleViewDrawingArea::writeLabel()
 {
 
-  Cairo::TextExtents connection_label;
-  std::string test;
-  vpz::CoupledModel::DescriptionList allConnections = mCurrent->getAllConnectionDescriptions();
-  if(not allConnections.empty())
-  {
-    for (vpz::CoupledModel::DescriptionList::const_iterator it = allConnections.begin();
-     it != allConnections.end(); ++it) {
-      const std::string& src_dst(it->first);
-    const std::string& src = src_dst.substr(0, src_dst.find('-'));
-    const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
-    const std::string& text = it->second;
-    if (src1->getName()==src&&dst1->getName()==dst)
-    {
-      if (Settings::settings().getDescriptionFontItalic()=="Italic"&&Settings::settings().getDescriptionFontBold()=="Bold")
-      {
-        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_OBLIQUE, Cairo::FONT_WEIGHT_BOLD);
-      }
-      else if (Settings::settings().getDescriptionFontItalic()=="Italic"&&Settings::settings().getDescriptionFontBold()=="")
-      {
-        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_OBLIQUE, Cairo::FONT_WEIGHT_NORMAL);
-      }
-      else if (Settings::settings().getDescriptionFontItalic()==""&&Settings::settings().getDescriptionFontBold()=="Bold")
-      {
-        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
-      }
-      else
-      {
-        mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
-      }
-      
-      int size=Settings::settings().getDescriptionFontSize();
+ vpz::BaseModel* src1 = 0;
+ vpz::BaseModel* dst1 = 0;
+ std::string portsrc, portdst;
+ int i = 0;
 
-      mContext->set_font_size(size);
-      mContext->set_source_rgb (255, 0, 0);
-      mContext->get_text_extents(text, connection_label);
+ const vpz::ModelList& children(mCurrent->getModelList());
+ vpz::ModelList::const_iterator it;
 
-      mContext->move_to((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2),
-        ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
-      mContext->show_text(text);
+ for (it = children.begin(); it != children.end(); ++it) {
+  const vpz::ConnectionList& outs(it->second->getOutputPortList());
+  vpz::ConnectionList::const_iterator jt;
+
+  for (jt = outs.begin(); jt != outs.end(); ++jt) {
+    const vpz::ModelPortList&  ports(jt->second);
+    vpz::ModelPortList::const_iterator kt;
+
+    for (kt = ports.begin(); kt != ports.end(); ++kt) {
+      src1 = it->second;
+      dst1 = kt->first;
+      Cairo::TextExtents connection_label;
+      std::string test;
+      vpz::CoupledModel::DescriptionList allConnections = mCurrent->getAllConnectionDescriptions();
+      if(not allConnections.empty())
+      {
+        for (vpz::CoupledModel::DescriptionList::const_iterator it = allConnections.begin();
+         it != allConnections.end(); ++it) {
+        const std::string& src_dst(it->first);
+        const std::string& src = src_dst.substr(0, src_dst.find('-'));
+        const std::string& dst = src_dst.substr(src_dst.find('-') + 1);
+        const std::string& text = it->second;
+        if (src1->getName()==src&&dst1->getName()==dst)
+        {
+          if (Settings::settings().getDescriptionFontItalic()=="Italic"&&Settings::settings().getDescriptionFontBold()=="Bold")
+          {
+            mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_OBLIQUE, Cairo::FONT_WEIGHT_BOLD);
+          }
+          else if (Settings::settings().getDescriptionFontItalic()=="Italic"&&Settings::settings().getDescriptionFontBold()=="")
+          {
+            mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_OBLIQUE, Cairo::FONT_WEIGHT_NORMAL);
+          }
+          else if (Settings::settings().getDescriptionFontItalic()==""&&Settings::settings().getDescriptionFontBold()=="Bold")
+          {
+            mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_BOLD);
+          }
+          else
+          {
+            mContext->select_font_face(Settings::settings().getDescriptionFontStyle(), Cairo::FONT_SLANT_NORMAL, Cairo::FONT_WEIGHT_NORMAL);
+          }
+
+          int size=Settings::settings().getDescriptionFontSize();
+
+          mContext->set_font_size(size);
+          mContext->set_source_rgb (0, 0, 255);
+          mContext->get_text_extents(text, connection_label);
+
+          mContext->move_to((src1->x()+dst1->x() + MODEL_RADIUS + MODEL_RADIUS)/2 - (connection_label.width / 2),
+            ((src1->y()+dst1->y() + MODEL_RADIUS + MODEL_RADIUS)/2)-5);
+          mContext->show_text(text);
+        }
+      }
     }
+
+    mContext->stroke();
+    ++i;
   }
 }
-
-mContext->stroke();
-
 }
-
-
-
-
-
-
+}
 
 void SimpleViewDrawingArea::preComputeConnection(int xs, int ys,
  int xd, int yd,
@@ -258,7 +274,6 @@ void SimpleViewDrawingArea::computeConnection(vpz::BaseModel* src,
  int index)
 {
   int xs, ys, xd, yd;
-  label(src,dst);
   if (src == mCurrent) {
     getCurrentModelInPosition(portsrc, xs, ys);
     getModelInPosition(xs, ys, dst, dst, xd, yd);
@@ -525,14 +540,10 @@ bool SimpleViewDrawingArea::on_button_press_event(GdkEventButton* event)
     if (src or dst) {
       if (internal) {
         mView->makeDescription(src, dst);
-
-           // mCurrent->delInputConnection(portsrc, dst, portdst);
       } else if (external) {
         mView->makeDescription(src, dst);
-       //     mCurrent->delOutputConnection(src, portsrc, portdst);
       } else {
         mView->makeDescription(src, dst);
-           // mCurrent->delInternalConnection(src, portsrc, dst, portdst);
       }
     }
     mHighlightLine = -1;

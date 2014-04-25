@@ -320,7 +320,7 @@ public:
 
 private:
     Modeling*                   mModeling;
-    vpz::CoupledModel*        mCurrent;
+    vpz::CoupledModel*          mCurrent;
     std::string                 mCurrentClass;
     size_t                      mIndex;
     GVLE*                       mGVLE;

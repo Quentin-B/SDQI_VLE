@@ -144,18 +144,18 @@ public:
         }
 
         if (prefs.get("gvle.graphics.font-style", &s) and not s.empty()) {
-mFontStyle = s;
-s.clear();
+            mFontStyle = s;
+            s.clear();
         }
 
         if (prefs.get("gvle.graphics.font-italic", &s) and not s.empty()) {
-mFontItalic = s;
-s.clear();
+            mFontItalic = s;
+            s.clear();
         }
 
         if (prefs.get("gvle.graphics.font-bold", &s) and not s.empty()) {
-mFontBold = s;
-s.clear();
+            mFontBold = s;
+            s.clear();
         }
 
         if (prefs.get("gvle.graphics.font-size", &d) and d > 0.0) {
@@ -164,29 +164,29 @@ s.clear();
         }
 
         if (prefs.get("gvle.graphics.description-font", &s) and not s.empty()) {
-mDescriptionFont = s;
-s.clear();
-}
+            mDescriptionFont = s;
+            s.clear();
+        }
 
         if (prefs.get("gvle.graphics.description-font-style", &s) and not s.empty()) {
-mDescriptionFontStyle = s;
-s.clear();
+            mDescriptionFontStyle = s;
+            s.clear();
         }
 
         if (prefs.get("gvle.graphics.description-font-italic", &s) and not s.empty()) {
-mDescriptionFontItalic = s;
-s.clear();
+            mDescriptionFontItalic = s;
+            s.clear();
         }
 
         if (prefs.get("gvle.graphics.description-font-bold", &s) and not s.empty()) {
-mDescriptionFontBold = s;
-s.clear();
+            mDescriptionFontBold = s;
+            s.clear();
         }
 
-if (prefs.get("gvle.graphics.description-font-size", &d) and d > 0) {
-mDescriptionFontSize = d;
-d = 0;
-}
+        if (prefs.get("gvle.graphics.description-font-size", &d) and d > 0) {
+            mDescriptionFontSize = d;
+            d = 0;
+        }
 
         if (prefs.get("gvle.graphics.line-width", &d) and d > 0.0) {
             mLineWidth = d;
@@ -563,7 +563,7 @@ void Settings::setDescriptionFont(const std::string& font)
     settings().mPimpl->mDescriptionFont = font;
 }
 
-const std::string& Settings::getDescriptionFont() 
+const std::string& Settings::getDescriptionFont() const
 {
     return settings().mPimpl->mDescriptionFont;
 }

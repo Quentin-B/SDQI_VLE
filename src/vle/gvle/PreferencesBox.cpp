@@ -1,28 +1,28 @@
 /*
- * This file is part of VLE, a framework for multi-modeling, simulation
- * and analysis of complex dynamical systems.
- * http://www.vle-project.org
- *
- * Copyright (c) 2003-2014 Gauthier Quesnel <quesnel@users.sourceforge.net>
- * Copyright (c) 2003-2014 ULCO http://www.univ-littoral.fr
- * Copyright (c) 2007-2014 INRA http://www.inra.fr
- *
- * See the AUTHORS or Authors.txt file for copyright owners and
- * contributors
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or (at
- * your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+* This file is part of VLE, a framework for multi-modeling, simulation
+* and analysis of complex dynamical systems.
+* http://www.vle-project.org
+*
+* Copyright (c) 2003-2014 Gauthier Quesnel <quesnel@users.sourceforge.net>
+* Copyright (c) 2003-2014 ULCO http://www.univ-littoral.fr
+* Copyright (c) 2007-2014 INRA http://www.inra.fr
+*
+* See the AUTHORS or Authors.txt file for copyright owners and
+* contributors
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or (at
+* your option) any later version.
+*
+* This program is distributed in the hope that it will be useful, but
+* WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+* General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 
 
 #include <vle/gvle/PreferencesBox.hpp>
@@ -143,7 +143,7 @@ public:
     {
         Settings::settings().setBackgroundColor(mBackgroundColor->get_color());
         Settings::settings().setForegroundColor(mForegroundColor->get_color());
-      //  Settings::settings().setAtomicColor(mAtomicColor->get_color());
+      // Settings::settings().setAtomicColor(mAtomicColor->get_color());
 
         /*@TODO
 * Commented out as makes the preference unusable. It causes an segmentation
@@ -187,20 +187,20 @@ public:
         fontItalic = "";
         pos = mDescriptionFont->get_font_name().find_last_of(" ");
         str_fontSize = mDescriptionFont->get_font_name().substr (pos+1,
-mDescriptionFont->get_font_name().length() -pos );
-fontSize = atof(str_fontSize.c_str());
-fontStyle = mDescriptionFont->get_font_name().substr(0, pos);
+        mDescriptionFont->get_font_name().length() -pos );
+        fontSize = atof(str_fontSize.c_str());
+        fontStyle = mDescriptionFont->get_font_name().substr(0, pos);
 
 
-if (fontStyle.find("Italic") < fontStyle.length()){
-fontItalic = "Italic";
-fontStyle = fontStyle.substr(0, fontStyle.find("Italic") - 1);
-}
+        if (fontStyle.find("Italic") < fontStyle.length()){
+            fontItalic = "Italic";
+            fontStyle = fontStyle.substr(0, fontStyle.find("Italic") - 1);
+        }
 
-if (fontStyle.find("Bold") < fontStyle.length()){
-fontBold = "Bold";
-fontStyle = fontStyle.substr(0, fontStyle.find("Bold") - 1);
-}
+        if (fontStyle.find("Bold") < fontStyle.length()){
+            fontBold = "Bold";
+            fontStyle = fontStyle.substr(0, fontStyle.find("Bold") - 1);
+        }
 
         Settings::settings().setDescriptionFontStyle(fontStyle);
         Settings::settings().setDescriptionFontSize(fontSize);
@@ -254,8 +254,8 @@ fontStyle = fontStyle.substr(0, fontStyle.find("Bold") - 1);
         mFontEditor->set_font_name(Settings::settings().getFontEditor());
     }
 
-    Glib::RefPtr < Gtk::Builder >   mXml;
-    Gtk::Dialog*                    mDialog;
+    Glib::RefPtr < Gtk::Builder > mXml;
+    Gtk::Dialog* mDialog;
 
     //Dialog widgets - Action
     Gtk::Button* mButtonApply;
@@ -281,9 +281,9 @@ fontStyle = fontStyle.substr(0, fontStyle.find("Bold") - 1);
     Gtk::CheckButton* mRightMargin;
     Gtk::CheckButton* mAutoIndent;
     Gtk::CheckButton* mIndentOnTab;
-    Gtk::SpinButton*  mIndentSize;
+    Gtk::SpinButton* mIndentSize;
     Gtk::CheckButton* mSmartHomeEnd;
-    Gtk::FontButton*  mFontEditor;
+    Gtk::FontButton* mFontEditor;
 
     std::list < sigc::connection > mSigcConnections;
 };

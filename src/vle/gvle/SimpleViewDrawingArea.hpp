@@ -117,8 +117,7 @@ namespace vle { namespace gvle {
 	 void preComputeConnectInfo();
 
 	 std::string getConnectionInfo(int mHighlightLine);
-	 void label (vpz::BaseModel* src, vpz::BaseModel* dst);
-
+	 void writeLabel ();
 
 	private:
 		vpz::CoupledModel* model;
@@ -180,9 +179,8 @@ namespace vle { namespace gvle {
 	 * @param model the model to draw
 	 * @param color the color to draw
 	 */
-        void drawChildrenModel(vpz::BaseModel* model,const Gdk::Color& color);
+    void drawChildrenModel(vpz::BaseModel* model,const Gdk::Color& color);
 
-	void label ();
 
 	bool on_button_press_event(GdkEventButton* event);
 	bool on_button_release_event(GdkEventButton* event);
