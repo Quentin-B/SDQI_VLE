@@ -86,10 +86,7 @@ static char ** prepare_environment_variable(void)
         size++;
     }
 
-    result = (char **)malloc((size + 1) * sizeof(char *));
-    if (!result) {
-        return NULL;
-    }
+    result = new char*[size + 1];
 
     it = ::environ;
     jt = result;
@@ -228,11 +225,10 @@ public:
         char **localenvp = prepare_environment_variable();
         char **localargv = convert_string_str_array(args);
 
-        if (::execve(exe.c_str(), localargv, localenvp) == -1) {
-            free_str_array(localargv);
-            free_str_array(localenvp);
-            exit(-1); /* Kill the child. */
-        }
+        ::execve(exe.c_str(), localargv, localenvp);
+        free_str_array(localargv);
+        free_str_array(localenvp);
+        std::abort();
 
         return false;
     }
