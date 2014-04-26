@@ -143,15 +143,8 @@ public:
     {
         Settings::settings().setBackgroundColor(mBackgroundColor->get_color());
         Settings::settings().setForegroundColor(mForegroundColor->get_color());
-      // Settings::settings().setAtomicColor(mAtomicColor->get_color());
-
-        /*@TODO
-* Commented out as makes the preference unusable. It causes an segmentation
-* error
-*/
-
-   //Settings::settings().setCoupledColor(mCoupledColor->get_color());
-
+        Settings::settings().setAtomicColor(mAtomicColor->get_color());
+        Settings::settings().setCoupledColor(mCoupledColor->get_color());
         Settings::settings().setSelectedColor(mSelectedColor->get_color());
         Settings::settings().setConnectionColor(mConnectionColor->get_color());
 

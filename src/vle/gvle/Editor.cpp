@@ -430,7 +430,8 @@ void DocumentDrawingArea::setVadjustment(double v)
 
 void DocumentDrawingArea::updateView()
 {
-    mCompleteArea->queueRedraw();
+    /* Commented out as it caused the segmentation error */
+  //  mCompleteArea->queueRedraw();
 }
 
 void DocumentDrawingArea::updateCursor()
